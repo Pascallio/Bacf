@@ -1,28 +1,26 @@
-import java.util.ArrayList;
-
 /**
  * Created by pascal on 3-1-17.
  */
-public class TicTacSolver {
+public class BigTicTacSolver {
 
-    private Cell[][] cell = new Cell[3][3];
+    private TicTacSolver[][] totalSolver = new TicTacSolver[3][3];
 
-    public TicTacSolver(){
+    public BigTicTacSolver(){
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
-                cell[i][j] = new Cell();
+                totalSolver[i][j] = new TicTacSolver();
             }
         }
     }
 
-    public Cell[][] getCells(){
-        return this.cell;
+    public TicTacSolver[][] getTotalSolver(){
+        return this.totalSolver;
     }
 
-    public boolean isFull(){
+    public boolean isFull(String token){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (cell[i][j].getToken().equals("")){
+                if (!totalSolver[i][j].isWon(token)){
                     return false;
                 }
             }
@@ -36,9 +34,9 @@ public class TicTacSolver {
 
     private boolean isRowWon(String token){
         for (int i = 0; i < 3; i++){
-            if (cell[i][0].getToken().equals(token) &&
-                    cell[i][1].getToken().equals(token) &&
-                    cell[i][2].getToken().equals(token)){
+            if (totalSolver[i][0].isWon(token) &&
+                    totalSolver[i][1].isWon(token) &&
+                    totalSolver[i][2].isWon(token)){
                 return true;
             }
         }
@@ -47,9 +45,9 @@ public class TicTacSolver {
 
     private boolean isColumnWon(String token){
         for (int i = 0; i < 3; i++){
-            if (cell[0][i].getToken().equals(token) &&
-                    cell[1][i].getToken().equals(token) &&
-                    cell[2][i].getToken().equals(token)){
+            if (totalSolver[0][i].isWon(token) &&
+                    totalSolver[1][i].isWon(token) &&
+                    totalSolver[2][i].isWon(token)){
                 return true;
             }
         }
@@ -58,16 +56,16 @@ public class TicTacSolver {
 
     private boolean isDiagonalWon(String token){
         for (int i = 0; i < 3; i++){
-            if (cell[0][0].getToken().equals(token) &&
-                    cell[1][1].getToken().equals(token) &&
-                    cell[2][2].getToken().equals(token)){
+            if (totalSolver[0][0].isWon(token) &&
+                    totalSolver[1][1].isWon(token) &&
+                    totalSolver[2][2].isWon(token)){
                 return true;
             }
         }
         for (int i = 0; i < 3; i++){
-            if (cell[0][2].getToken().equals(token) &&
-                    cell[1][1].getToken().equals(token) &&
-                    cell[2][0].getToken().equals(token)){
+            if (totalSolver[0][2].isWon(token) &&
+                    totalSolver[1][1].isWon(token) &&
+                    totalSolver[2][0].isWon(token)){
                 return true;
             }
         }
@@ -76,5 +74,3 @@ public class TicTacSolver {
     }
 
 }
-
-
