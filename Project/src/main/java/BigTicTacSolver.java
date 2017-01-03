@@ -17,10 +17,10 @@ public class BigTicTacSolver {
         return this.totalSolver;
     }
 
-    public boolean isFull(String token){
+    public boolean isFull(){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (!totalSolver[i][j].isWon(token)){
+                if (!totalSolver[i][j].isFull()){
                     return false;
                 }
             }

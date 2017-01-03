@@ -3,7 +3,7 @@
  */
 public class Cell {
 
-    private boolean bomb = false;
+    private Boolean bomb;
     private String token = "";
 
     public Cell(){
@@ -18,6 +18,10 @@ public class Cell {
         return this.token;
     }
 
+    public boolean hasToken(){
+        return this.token.length() > 0;
+    }
+
     public void setBomb(){
         this.bomb = true;
     }
@@ -25,5 +29,10 @@ public class Cell {
     public boolean getBomb(){
         return this.bomb;
     }
+
+    public boolean hasBomb(){
+        return this.bomb != null;
+    }
+
 
 }

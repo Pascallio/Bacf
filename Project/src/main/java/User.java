@@ -4,9 +4,9 @@
 public class User {
 
     private String name;
+    private String avatar;
     private int numOfLifes;
     private int numOfBombs;
-    private String avatar;
     private int time;
 
     public User(String name, String avatar){

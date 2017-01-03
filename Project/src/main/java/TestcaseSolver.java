@@ -4,16 +4,20 @@
  */
 public class TestcaseSolver {
 
+    private static BigTicTacSolver check = new BigTicTacSolver();
+    private static TicTacSolver[][] total = check.getTotalSolver();
+
     public static void main(String args[]){
+        if (!check.isFull()) {
+            Cell[][] smallCel = total[0][0].getCells();
+            smallCel[0][0].setToken("x");
 
-        BigTicTacSolver check = new BigTicTacSolver();
+            System.out.println(smallCel[0][0].getToken());
 
-        check.getTotalSolver()[0][0].getCells()[0][0].setToken("x"); //[0][0] zijn coordinaten, linksboven.
-        System.out.println(check.getTotalSolver()[0][0].getCells()[0][0].getToken());
+            smallCel[0][1].setBomb(); //Zet een bom in deze cel.
+            System.out.println(smallCel[0][1].getBomb());
 
-        check.getTotalSolver()[0][0].getCells()[0][1].setBomb(); //Zet een bom in deze cel.
-        System.out.println(check.getTotalSolver()[0][0].getCells()[0][1].getBomb());
-
-
+            System.out.println(smallCel[0][1].hasBomb());
+        }
     }
 }
