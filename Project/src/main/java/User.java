@@ -5,25 +5,38 @@ public class User {
 
     private String name;
     private String avatar;
-    private int numOfLifes;
-    private int numOfBombs;
+    private int numOfLifes = 0;
+    private int numOfBombs = 0;
     private int time;
+    private String token;
 
-    public User(String name, String avatar){
-        this.name = name;
-        this.avatar = avatar;
+    public User(){
+
     }
 
-    public User(String name, String avatar, int numOfLifes, int numOfBombs){
+    public User(String name, String avatar, String token){
+        this.name = name;
+        this.avatar = avatar;
+        this.token = token;
+    }
+
+    public User(String name, String avatar, String token, int numOfLifes, int numOfBombs){
         this.name = name;
         this.avatar = avatar;
         this.numOfLifes = numOfLifes;
         this.numOfBombs = numOfBombs;
+        this.token = token;
 
     }
 
+
+
     public int getNumOfBombs(){
         return this.numOfBombs;
+    }
+
+    public void setNumOfLifes(int lifes){
+        this.numOfLifes = lifes;
     }
 
     public int getNumOfLifes(){
@@ -50,8 +63,20 @@ public class User {
         return this.name;
     }
 
+    @Override
+    public String toString(){
+        return this.name;
+    }
+
     public String getAvatar(){
         return this.avatar;
     }
 
+    public void setToken(String token){
+        this.token = token;
+    }
+
+    public String getToken(){
+        return this.token;
+    }
 }

@@ -1,7 +1,7 @@
 /**
  * Created by pascal on 3-1-17.
  */
-public class Cell {
+public class Cell{
 
     private Boolean bomb;
     private String token = "";

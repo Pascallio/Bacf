@@ -1,11 +1,11 @@
 /**
  * Created by pascal on 3-1-17.
  */
-public class TicTacSolver {
+public class BigCell {
 
     private Cell[][] cell = new Cell[3][3];
 
-    public TicTacSolver(){
+    public BigCell(){
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 cell[i][j] = new Cell();
@@ -13,7 +13,7 @@ public class TicTacSolver {
         }
     }
 
-    public Cell[][] getCells(){
+    public Cell[][] getSmallCells(){
         return this.cell;
     }
 

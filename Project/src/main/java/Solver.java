@@ -1,19 +1,60 @@
 /**
  * Created by pascal on 3-1-17.
  */
-public class BigTicTacSolver {
+public class Solver {
 
-    private TicTacSolver[][] totalSolver = new TicTacSolver[3][3];
+    private boolean lifes = false;
+    private boolean bombs = false;
+    private int currentPlayer = 1;
+    private User winner;
+    private User[] players;
+    private BigCell[][] totalSolver = new BigCell[3][3];
 
-    public BigTicTacSolver(){
+    public Solver(User[] players){
+        this.players = players;
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
-                totalSolver[i][j] = new TicTacSolver();
+                totalSolver[i][j] = new BigCell();
             }
         }
     }
 
-    public TicTacSolver[][] getTotalSolver(){
+    public Solver(User[] players, boolean lifes) {
+        this.players = players;
+        this.lifes = true;
+        this.bombs = true;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                totalSolver[i][j] = new BigCell();
+            }
+        }
+    }
+
+    public User getCurrentPlayer(){
+        switch (currentPlayer){
+            default: return this.players[0];
+            case 2: return this.players[1];
+        }
+    }
+
+    public void switchPlayer(){
+        switch (currentPlayer){
+            case 1: currentPlayer = 2;
+                break;
+            case 2: currentPlayer = 1;
+                break;
+        }
+    }
+
+    public boolean hasLifesOn(){
+        return this.lifes;
+    }
+
+    public boolean hasBombsOn(){
+        return this.bombs;
+    }
+
+    public BigCell[][] getBigCells(){
         return this.totalSolver;
     }
 
@@ -26,6 +67,14 @@ public class BigTicTacSolver {
             }
         }
         return true;
+    }
+
+    public void setWinner(User player){
+        this.winner = player;
+    }
+
+    public User getWinner(){
+        return this.winner;
     }
 
     public boolean isWon(String token){
@@ -69,7 +118,6 @@ public class BigTicTacSolver {
                 return true;
             }
         }
-
         return false;
     }
 
