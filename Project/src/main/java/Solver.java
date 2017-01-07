@@ -104,20 +104,16 @@ public class Solver {
     }
 
     private boolean isDiagonalWon(String token){
-        for (int i = 0; i < 3; i++){
             if (totalSolver[0][0].isWon(token) &&
                     totalSolver[1][1].isWon(token) &&
                     totalSolver[2][2].isWon(token)){
                 return true;
             }
-        }
-        for (int i = 0; i < 3; i++){
             if (totalSolver[0][2].isWon(token) &&
                     totalSolver[1][1].isWon(token) &&
                     totalSolver[2][0].isWon(token)){
                 return true;
             }
-        }
         return false;
     }
 
