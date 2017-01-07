@@ -17,6 +17,10 @@ public class BigCell {
         return this.cell;
     }
 
+    public Cell getSmallCells(int row, int column){
+        return this.cell[row][column];
+    }
+
     public boolean isFull(){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -54,23 +58,11 @@ public class BigCell {
         return false;
     }
 
-    private boolean isDiagonalWon(String token){
-        for (int i = 0; i < 3; i++){
-            if (cell[0][0].getToken().equals(token) &&
-                    cell[1][1].getToken().equals(token) &&
-                    cell[2][2].getToken().equals(token)){
-                return true;
-            }
-        }
-        for (int i = 0; i < 3; i++){
-            if (cell[0][2].getToken().equals(token) &&
-                    cell[1][1].getToken().equals(token) &&
-                    cell[2][0].getToken().equals(token)){
-                return true;
-            }
-        }
+    private boolean isDiagonalWon(String token) {
+        return cell[0][0].getToken().equals(token) && cell[1][1].getToken().equals(token) &&
+                cell[2][2].getToken().equals(token) || cell[0][2].getToken().equals(token) &&
+                cell[1][1].getToken().equals(token) && cell[2][0].getToken().equals(token);
 
-        return false;
     }
 
 }

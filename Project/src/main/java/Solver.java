@@ -21,8 +21,8 @@ public class Solver {
 
     public Solver(User[] players, boolean lifes) {
         this.players = players;
-        this.lifes = true;
-        this.bombs = true;
+        this.lifes = lifes;
+        this.bombs = lifes;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 totalSolver[i][j] = new BigCell();
@@ -56,6 +56,10 @@ public class Solver {
 
     public BigCell[][] getBigCells(){
         return this.totalSolver;
+    }
+
+    public BigCell getBigCells(int row, int column){
+        return this.totalSolver[row][column];
     }
 
     public boolean isFull(){
@@ -103,18 +107,10 @@ public class Solver {
         return false;
     }
 
-    private boolean isDiagonalWon(String token){
-            if (totalSolver[0][0].isWon(token) &&
-                    totalSolver[1][1].isWon(token) &&
-                    totalSolver[2][2].isWon(token)){
-                return true;
-            }
-            if (totalSolver[0][2].isWon(token) &&
-                    totalSolver[1][1].isWon(token) &&
-                    totalSolver[2][0].isWon(token)){
-                return true;
-            }
-        return false;
+    private boolean isDiagonalWon(String token) {
+        return totalSolver[0][0].isWon(token) && totalSolver[1][1].isWon(token) &&
+                totalSolver[2][2].isWon(token) || totalSolver[0][2].isWon(token) &&
+                totalSolver[1][1].isWon(token) && totalSolver[2][0].isWon(token);
     }
 
 }
