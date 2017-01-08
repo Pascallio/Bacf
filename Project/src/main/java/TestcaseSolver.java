@@ -15,45 +15,37 @@ public class TestcaseSolver {
             // Check if all (big) fields are full of tokens, if not: proceed
             if (!control.isFull()) {
 
-                /* To make a move, select a single cell in [row][column] format:
-                 * [0][0] = most upper left
-                 * [2][2] = most down right
+                /* To make a move, select a single cell in (row, column) format:
+                 * (0, 0) = most upper left
+                 * (2, 2) = most down right
                  * Replace these values with the values selected on the gridPane.
-                 *
-                 * BigCell cell = control.getBigCells()[0][0];
-                 * Or:
                  */
-                BigCell cell = control.getBigCells(0, 0);
+                Solver.BigCell bigCell = control.getBigCells(0, 0);
 
-                /* Get a small cel within a BigCell object.
-                 * Cell smallCell = control.getBigCells()[0][0].getSmallCells()[0][0];
-                 * Or somewhat neater syntax:
-                 */
-                Cell smallCell = control.getBigCells(0, 0).getSmallCells(0, 0);
+                // Get a small cel within a BigCell object.
+                Solver.BigCell.Cell smallCell = control.getBigCells(0, 0).getSmallCells(0, 0);
 
                 // Create a user object for the current player.
                 User player = control.getCurrentPlayer();
 
-                // Set token for current player in the smallCel,
-                // but only if there isn't a token yet.
-                if (!smallCell.hasToken()) {
-                    smallCell.setToken(player.getToken());
-                }
+                // Set action on mouseclick of cell. If the cell already contains
+                // a token, a error message will be displayed.
+                smallCell.setToken(player.getToken());
 
                 // Reduce life if the smallCell contains a bomb.
                 if (smallCell.hasBomb()) {
                     player.setNumOfLifes(player.getNumOfLifes() - 1);
                 }
 
-                // Add a few more bombs
-                cell.getSmallCells(1, 0).setToken(player.getToken());
-                cell.getSmallCells(2, 0).setToken(player.getToken());
+                // Add a few more tokens
+                bigCell.getSmallCells(1, 0).setToken(player.getToken());
+                bigCell.getSmallCells(2, 0).setToken(player.getToken());
 
                 // How to check if a big cell has won
-                boolean won = cell.isWon(player.getToken());
+                boolean won = bigCell.isWon(player.getToken());
 
                 // How to check if a big cell is full.
-                boolean full = cell.isFull();
+                boolean full = bigCell.isFull();
 
                 // Show results
                 System.out.println(won);

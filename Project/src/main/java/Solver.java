@@ -1,3 +1,6 @@
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+
 /**
  * Created by pascal on 3-1-17.
  */
@@ -9,12 +12,13 @@ public class Solver {
     private User winner;
     private User[] players;
     private BigCell[][] totalSolver = new BigCell[3][3];
+    private GridPane pane = new GridPane();
 
     public Solver(User[] players){
         this.players = players;
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
-                totalSolver[i][j] = new BigCell();
+                pane.add(totalSolver[i][j] = new BigCell(), j, i);
             }
         }
     }
@@ -52,10 +56,6 @@ public class Solver {
 
     public boolean hasBombsOn(){
         return this.bombs;
-    }
-
-    public BigCell[][] getBigCells(){
-        return this.totalSolver;
     }
 
     public BigCell getBigCells(int row, int column){
@@ -112,5 +112,117 @@ public class Solver {
                 totalSolver[2][2].isWon(token) || totalSolver[0][2].isWon(token) &&
                 totalSolver[1][1].isWon(token) && totalSolver[2][0].isWon(token);
     }
+
+    public class BigCell extends Pane {
+
+        private Cell[][] cell = new Cell[3][3];
+        private GridPane pane = new GridPane();
+
+        public BigCell(){
+            for (int i = 0; i < 3; i++){
+                for (int j = 0; j < 3; j++){
+                    pane.add(cell[i][j] = new Cell(), j, i);
+                }
+            }
+        }
+
+        public Cell getSmallCells(int row, int column){
+            return this.cell[row][column];
+        }
+
+        public boolean isFull(){
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (cell[i][j].getToken().equals("")){
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public boolean isWon(String token){
+            return isRowWon(token) || isColumnWon(token) || isDiagonalWon(token);
+        }
+
+        private boolean isRowWon(String token){
+            for (int i = 0; i < 3; i++){
+                if (cell[i][0].getToken().equals(token) &&
+                        cell[i][1].getToken().equals(token) &&
+                        cell[i][2].getToken().equals(token)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private boolean isColumnWon(String token){
+            for (int i = 0; i < 3; i++){
+                if (cell[0][i].getToken().equals(token) &&
+                        cell[1][i].getToken().equals(token) &&
+                        cell[2][i].getToken().equals(token)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private boolean isDiagonalWon(String token) {
+            return cell[0][0].getToken().equals(token) && cell[1][1].getToken().equals(token) &&
+                    cell[2][2].getToken().equals(token) || cell[0][2].getToken().equals(token) &&
+                    cell[1][1].getToken().equals(token) && cell[2][0].getToken().equals(token);
+
+        }
+
+        public class Cell extends Pane {
+
+            private Boolean bomb;
+            private String token = "";
+
+            public Cell(){
+                setStyle("-fx-border-color: black");
+                this.setOnMouseClicked(e -> onMouseClick());
+            }
+
+            private void onMouseClick(){
+                if (!hasToken()){
+                    setToken(getCurrentPlayer().getToken());
+                } else {
+                    System.out.println("Already has a token!");
+                }
+
+            }
+
+            public void setToken(String token){
+                this.token = token;
+            }
+
+            public String getToken(){
+                return this.token;
+            }
+
+            public boolean hasToken(){
+                return this.token.length() > 0;
+            }
+
+            public void setBomb(){
+                this.bomb = true;
+            }
+
+            public boolean getBomb(){
+                return this.bomb;
+            }
+
+            public boolean hasBomb(){
+                return this.bomb != null;
+            }
+
+
+        }
+
+    }
+
+
+
 
 }
