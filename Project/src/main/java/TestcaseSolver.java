@@ -7,15 +7,13 @@ public class TestcaseSolver {
     // Create Solver Object with each player in an User array object.
     private static Solver control = new Solver(new User[]{
                     new User("naam1", "avatar1", "X"),
-                    new User("naam2", "avatar2", "O")
-    });
+                    new User("naam2", "avatar2", "O")}, "speelscherm");
 
     public static void main(String args[]) {
-
             // Check if all (big) fields are full of tokens, if not: proceed
             if (!control.isFull()) {
 
-                /* To make a move, select a single cell in (row, column) format:
+                /* To make a move, select a single cell in (column, row) format:
                  * (0, 0) = most upper left
                  * (2, 2) = most down right
                  * Replace these values with the values selected on the gridPane.
@@ -30,16 +28,15 @@ public class TestcaseSolver {
 
                 // Set action on mouseclick of cell. If the cell already contains
                 // a token, a error message will be displayed.
-                smallCell.setToken(player.getToken());
-
-                // Reduce life if the smallCell contains a bomb.
-                if (smallCell.hasBomb()) {
-                    player.setNumOfLifes(player.getNumOfLifes() - 1);
-                }
+                // This doesn't have to be called, but calling the method will
+                // demonstrate its function.
+                smallCell.onMouseClick();
 
                 // Add a few more tokens
-                bigCell.getSmallCells(1, 0).setToken(player.getToken());
-                bigCell.getSmallCells(2, 0).setToken(player.getToken());
+                bigCell.getSmallCells(1, 0).onMouseClick();
+                bigCell.getSmallCells(2, 0).onMouseClick();
+                bigCell.getSmallCells(2, 0).onMouseClick();
+
 
                 // How to check if a big cell has won
                 boolean won = bigCell.isWon(player.getToken());

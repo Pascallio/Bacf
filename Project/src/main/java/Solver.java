@@ -8,14 +8,16 @@ public class Solver {
 
     private boolean lifes = false;
     private boolean bombs = false;
+    private String scherm;
     private int currentPlayer = 1;
     private User winner;
     private User[] players;
     private BigCell[][] totalSolver = new BigCell[3][3];
     private GridPane pane = new GridPane();
 
-    public Solver(User[] players){
+    public Solver(User[] players, String scherm){
         this.players = players;
+        this.scherm = scherm;
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 pane.add(totalSolver[i][j] = new BigCell(), j, i);
@@ -23,15 +25,24 @@ public class Solver {
         }
     }
 
-    public Solver(User[] players, boolean lifes) {
+    public Solver(User[] players, String scherm, boolean lifes) {
         this.players = players;
+        this.scherm = scherm;
         this.lifes = lifes;
         this.bombs = lifes;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                totalSolver[i][j] = new BigCell();
+                pane.add(totalSolver[i][j] = new BigCell(), j, i);
             }
         }
+    }
+
+    public void setScherm(String scherm){
+        this.scherm = scherm;
+    }
+
+    public String getScherm(){
+        return this.scherm;
     }
 
     public User getCurrentPlayer(){
@@ -184,13 +195,26 @@ public class Solver {
                 this.setOnMouseClicked(e -> onMouseClick());
             }
 
-            private void onMouseClick(){
-                if (!hasToken()){
-                    setToken(getCurrentPlayer().getToken());
+            public void onMouseClick(){
+                if (scherm.equals("speelscherm")) {
+                    if (!hasToken()) {
+                        User player = getCurrentPlayer();
+                        setToken(player.getToken());
+                        System.out.println("Token placed!");
+                        if (hasBomb()){
+                            player.setNumOfLifes(player.getNumOfLifes() - 1);
+                        }
+                    } else {
+                        System.out.println("Already has a token!");
+                    }
                 } else {
-                    System.out.println("Already has a token!");
+                    if (!hasBomb()){
+                        System.out.println("Bomb placed!");
+                        setBomb();
+                    } else {
+                        System.out.println("Already has a bomb!");
+                    }
                 }
-
             }
 
             public void setToken(String token){
