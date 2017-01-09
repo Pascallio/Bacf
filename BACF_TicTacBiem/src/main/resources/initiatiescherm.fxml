@@ -21,7 +21,7 @@ Daaronder komen alle elementen die op de pane staan. De elementen met een 'fx:id
 'onAaction' die beschreven staan in de Controller.
  -->
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="speelController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="initiatieController">
 
 <children>
 <Label layoutX="253.0" layoutY="14.0" style="-fx-font-weight: BOLD;" text="Ultimate TicTacBiem">
@@ -32,7 +32,7 @@ Daaronder komen alle elementen die op de pane staan. De elementen met een 'fx:id
 <Button fx:id="quitKnop" layoutX="43.0" layoutY="455.0" mnemonicParsing="false" onAction="#quitKlikken" prefHeight="25.0" prefWidth="96.0" text="Quit" />
       <Separator layoutX="20.0" layoutY="437.0" prefHeight="4.0" prefWidth="659.0" />
       <Separator layoutX="21.0" layoutY="41.0" prefHeight="4.0" prefWidth="659.0" />
-      <GridPane fx:id="speelGridPane" layoutX="241.0" layoutY="90.0" prefHeight="345.0" prefWidth="437.0" style="-fx-border-color: black;">
+      <GridPane fx:id="speelGridPane" layoutX="229.0" layoutY="74.0" prefHeight="339.0" prefWidth="436.0" style="-fx-border-color: black;">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -44,13 +44,14 @@ Daaronder komen alle elementen die op de pane staan. De elementen met een 'fx:id
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <Label fx:id="lbl_naam1" layoutX="44.0" layoutY="187.0" text="Naam speler 1" />
-      <Label fx:id="lbl_naam2" layoutX="44.0" layoutY="351.0" text="Naam speler 2" />
-      <Label fx:id="lbl_levens1" layoutX="43.0" layoutY="213.0" text="Overige levens" />
-      <Label fx:id="lbl_levens2" layoutX="44.0" layoutY="378.0" text="Overige levens" />
-      <Label fx:id="lbl_naamBeurt" layoutX="130.0" layoutY="57.0" text="Naam speler aan de beurt" />
-      <Label fx:id="lbl_timeLimit" layoutX="369.0" layoutY="57.0" text="Tijdslimiet: seconden." />
-      <ImageView fx:id="iv_avatar1" fitHeight="95.0" fitWidth="113.0" layoutX="43.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="iv_avatar2" fitHeight="95.0" fitWidth="113.0" layoutX="43.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lbl_naam1" layoutX="44.0" layoutY="227.0" text="Naam speler 1" />
+      <Label fx:id="lbl_naam2" layoutX="44.0" layoutY="377.0" text="Naam speler 2" />
+      <Label fx:id="lbl_bommen1" layoutX="45.0" layoutY="250.0" text="Overige bommen" />
+      <Label fx:id="lbl_bommen2" layoutX="44.0" layoutY="404.0" text="Overige bommen" />
+      <Label fx:id="lbl_naamBeurt" layoutX="44.0" layoutY="57.0" text="Naam speler aan de beurt" />
+      <Button fx:id="playKnop" layoutX="560.0" layoutY="455.0" mnemonicParsing="false" onAction="#playKlikken" prefHeight="25.0" prefWidth="96.0" text="Play" />
+      <Label fx:id="lbl_totaalBommen" layoutX="43.0" layoutY="89.0" text="Totaal overige bommen" />
+      <ImageView fx:id="iv_avatar1" fitHeight="83.0" fitWidth="96.0" layoutX="43.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="iv_avatar2" fitHeight="83.0" fitWidth="96.0" layoutX="43.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true" />
 </children>
 </Pane>

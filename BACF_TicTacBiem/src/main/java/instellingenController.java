@@ -1,4 +1,5 @@
 import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,21 +11,45 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.beans.value.ChangeListener ;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class instellingenController implements Initializable {
     public MainController main;
+    @FXML BufferedImage bufferedImage;
+    @FXML ImageView iv_avatar1;
+    @FXML ImageView iv_avatar2;
+    @FXML String path;
+    @FXML String outPath1;
+    @FXML String outPath2;
+    @FXML String naamBeurt;
+    @FXML private TextField tf_naamSpeler1;
+    @FXML private TextField tf_naamSpeler2;
+    @FXML private Label errorLabel;
+    @FXML private Label timeLabel;
+    @FXML private Slider timeSlider;
+    @FXML private ComboBox cb_avatarSpeler1;
+    @FXML private ComboBox cb_avatarSpeler2;
+    @FXML private ComboBox cb_startingPlayer;
+    @FXML private ComboBox cb_bombs;
+    @FXML private ComboBox cb_bombsPerPlayer;
+    @FXML private ComboBox cb_lifesPerPlayer;
+    @FXML private ComboBox cb_maxPerField;
+    @FXML private ComboBox cb_timeLimit;
+
+
 
     public void initialize(URL location, ResourceBundle resources) {
         initialize();
     }
     public void initialize() {
-        cb_avatarSpeler1.getItems().addAll("X", "O");
-        cb_avatarSpeler2.getItems().addAll("X", "O");
         cb_startingPlayer.getItems().addAll("1", "2");
         cb_startingPlayer.getSelectionModel().selectFirst();
 
@@ -42,24 +67,71 @@ public class instellingenController implements Initializable {
                         String.valueOf((int) timeSlider.getValue()));
             }
         });
+        cb_avatarSpeler1.getItems().addAll("Bomb", "Cat", "Devil", "Ninja", "Sheep", "Shroom", "Trippy", "Unknown");
+        cb_avatarSpeler2.getItems().addAll("Bomb", "Cat", "Devil", "Ninja", "Sheep", "Shroom", "Trippy", "Unknown");
+        cb_avatarSpeler1.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals("Devil")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\devil_icon.png";
+            } else if (newValue.equals("Bomb")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\bomb_icon.jpg";
+            } else if (newValue.equals("Cat")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\cat_icon.jpg";
+            }else if (newValue.equals("Ninja")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\ninja_icon.jpg";
+            }else if (newValue.equals("Sheep")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\sheep_icon.png";
+            }else if (newValue.equals("Shroom")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\shroom_icon.png";
+            }else if (newValue.equals("Trippy")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\trip_icon.png";
+            }else if (newValue.equals("Unknown")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\unknown_icon.jpg";
+            } else {
+                bufferedImage = null;
+            }
+            try {
+                bufferedImage = ImageIO.read(new File(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+                bufferedImage = null;
+            }
+            iv_avatar1.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+            outPath1 = path;
+        });
+        cb_avatarSpeler2.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals("Devil")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\devil_icon.png";
+            } else if (newValue.equals("Bomb")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\bomb_icon.jpg";
+            } else if (newValue.equals("Cat")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\cat_icon.jpg";
+            }else if (newValue.equals("Ninja")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\ninja_icon.jpg";
+            }else if (newValue.equals("Sheep")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\sheep_icon.png";
+            }else if (newValue.equals("Shroom")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\shroom_icon.png";
+            }else if (newValue.equals("Trippy")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\trip_icon.png";
+            }else if (newValue.equals("Unknown")) {
+                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\unknown_icon.jpg";
+            } else {
+                bufferedImage = null;
+            }
+            try {
+                bufferedImage = ImageIO.read(new File(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+                bufferedImage = null;
+            }
+            iv_avatar2.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+            outPath2 = path;
+        });
     }
 
     public void init(MainController mainController) {
         main = mainController;
     }
-    @FXML private TextField tf_naamSpeler1;
-    @FXML private TextField tf_naamSpeler2;
-    @FXML private Label errorLabel;
-    @FXML private Label timeLabel;
-    @FXML private Slider timeSlider;
-    @FXML private ComboBox cb_avatarSpeler1;
-    @FXML private ComboBox cb_avatarSpeler2;
-    @FXML private ComboBox cb_startingPlayer;
-    @FXML private ComboBox cb_bombs;
-    @FXML private ComboBox cb_bombsPerPlayer;
-    @FXML private ComboBox cb_lifesPerPlayer;
-    @FXML private ComboBox cb_maxPerField;
-    @FXML private ComboBox cb_timeLimit;
 
     public void backKlikken (ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
@@ -74,31 +146,82 @@ public class instellingenController implements Initializable {
         System.out.println("ook eigenlijk eerst naar initiatiescherm");
         System.out.println("bij speelscherm een initialize meegeven met waar de bommen liggen + gelijk plaatsen");
 
-        System.out.println(tf_naamSpeler1.getText());
-        System.out.println(tf_naamSpeler2.getText());
+        if (cb_startingPlayer.getSelectionModel().getSelectedItem().equals(1)) {
+            naamBeurt = tf_naamSpeler1.getText();
+        } else {
+            naamBeurt = tf_naamSpeler2.getText();
+        }
 
-        System.out.println(cb_avatarSpeler1.getSelectionModel().getSelectedItem());
-        System.out.println(cb_avatarSpeler2.getSelectionModel().getSelectedItem());
+        if (cb_timeLimit.getSelectionModel().getSelectedItem().equals("On")) {
+            System.out.println("TIJDLIMIET meegeven naar speelscherm als deze aan staat.");
+            System.out.println(timeLabel.getText());
+        }
 
-        System.out.println(cb_startingPlayer.getSelectionModel().getSelectedItem());
-        System.out.println(cb_bombs.getSelectionModel().getSelectedItem());
-        System.out.println(cb_bombsPerPlayer.getSelectionModel().getSelectedItem());
-        System.out.println(cb_lifesPerPlayer.getSelectionModel().getSelectedItem());
-        System.out.println(cb_maxPerField.getSelectionModel().getSelectedItem());
-        System.out.println(cb_timeLimit.getSelectionModel().getSelectedItem());
+        if (tf_naamSpeler1.getText().length() < 3) {
+            errorLabel.setText("Naam speler 1 moet langer zijn dan 2 karakters.");
+        } else if (tf_naamSpeler2.getText().length() < 3) {
+            errorLabel.setText("Naam speler 2 moet langer zijn dan 2 karakters.");
+        } else if (tf_naamSpeler1.getText().equals(tf_naamSpeler2.getText())) {
+            errorLabel.setText("Namen van de spelers mogen niet hetzelfde zijn.");
+        } else if (cb_avatarSpeler1.getSelectionModel().getSelectedItem() == null) {
+            errorLabel.setText("Speler 1 moet een avatar selecteren.");
+        } else if (cb_avatarSpeler2.getSelectionModel().getSelectedItem() == null) {
+            errorLabel.setText("Speler 2 moet een avatar selecteren.");
+        } else if (cb_avatarSpeler1.getSelectionModel().getSelectedItem().equals(cb_avatarSpeler2.getSelectionModel().getSelectedItem())) {
+            errorLabel.setText("Avatars van de spelers mogen niet hetzelfde zijn.");
+        } else if (cb_bombs.getSelectionModel().getSelectedItem().equals("On")) {
+            if (cb_bombsPerPlayer.getSelectionModel().getSelectedItem() == null) {
+                errorLabel.setText("Het aantal bommen per speler moet worden gekozen.");
+            } else if (cb_lifesPerPlayer.getSelectionModel().getSelectedItem() == null) {
+                errorLabel.setText("Het aantal levens per speler moet worden gekozen.");
+            } else if (cb_maxPerField.getSelectionModel().getSelectedItem() == null) {
+                errorLabel.setText("Het maximaal aantal bommen per veld moet worden gekozen.");
+            } else {
+                initiatieController.setPaths(outPath1, outPath2);
 
-        System.out.println(timeSlider.getValue());
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("initiatiescherm.fxml"));
+                Parent root = loader.load();
 
-        Double d = new Double(timeSlider.getValue());
-        int i = d.intValue();
-        System.out.println(i);
-        System.out.println(timeLabel.getText());
+                initiatieController controller = loader.getController();
+                Scene scene = new Scene(root);
+                controller.lbl_naam1.setText(tf_naamSpeler1.getText());
+                controller.lbl_naam2.setText(tf_naamSpeler2.getText());
+                controller.lbl_naamBeurt.setText(naamBeurt);
+                String bommen = cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString();
+                controller.lbl_bommen1.setText(bommen);
+                controller.lbl_bommen2.setText(bommen);
+                Integer bombs = Integer.parseInt(bommen)*2;
+                controller.lbl_totaalBommen.setText(bombs.toString());
 
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("speelscherm.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+                //LEVENS HIER NOG MEEGEVEN VOOR SPEELSCHERM LATER
+                //check wrm hieronder
+
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
+        else {
+            speelController.setPaths(outPath1, outPath2);
+
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("speelscherm.fxml"));
+            Parent root = loader.load();
+
+            speelController controller = loader.getController();
+            Scene scene = new Scene(root);
+            controller.lbl_naam1.setText(tf_naamSpeler1.getText());
+            controller.lbl_naam2.setText(tf_naamSpeler2.getText());
+            controller.lbl_naamBeurt.setText(naamBeurt);
+            //String levens = cb_lifesPerPlayer.getSelectionModel().getSelectedItem().toString();
+            //controller.lbl_levens1.setText(levens);
+            //controller.lbl_levens2.setText(levens);
+            controller.lbl_timeLimit.setText(timeLabel.getText());
+
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 }

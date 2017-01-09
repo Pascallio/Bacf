@@ -5,6 +5,7 @@ public class MainController {
     @FXML beginController begincontroller;
     @FXML regelController regelcontroller;
     @FXML instellingenController instellingencontroller;
+    @FXML initiatieController initiatiecontroller;
     @FXML speelController speelcontroller;
     @FXML eindController eindcontroller;
 
@@ -15,6 +16,7 @@ public class MainController {
         begincontroller.init(this);
         regelcontroller.init(this);
         instellingencontroller.init(this);
+        initiatiecontroller.init(this);
         speelcontroller.init(this);
         eindcontroller.init(this);
     }
