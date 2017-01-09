@@ -1,6 +1,10 @@
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+
+import java.awt.*;
 
 /**
  * Created by pascal on 3-1-17.
@@ -22,7 +26,7 @@ public class Solver {
         this.pane = pane;
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
-                pane.add(totalSolver[i][j] = new BigCell(pane), j, i);
+                pane.add(totalSolver[i][j] = new BigCell(), j, i);
             }
         }
     }
@@ -34,7 +38,7 @@ public class Solver {
         this.bombs = lifes;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                pane.add(totalSolver[i][j] = new BigCell(pane), j, i);
+                pane.add(totalSolver[i][j] = new BigCell(), j, i);
             }
         }
     }
@@ -130,12 +134,12 @@ public class Solver {
 
         private Cell[][] cell = new Cell[3][3];
 
-        public BigCell(GridPane smallpane){
-            setStyle("-fx-border-color: black");
-            setStyle("-fx-background-color: transparent;");
+        public BigCell(){
+            setStyle("-fx-border-color: blue");
+            //setStyle("-fx-background-color: transparent;");
             for (int i = 0; i < 3; i++){
                 for (int j = 0; j < 3; j++){
-                    smallpane.add(cell[i][j] = new Cell(), j, i);
+                    this.add(cell[i][j] = new Cell(), j, i);
                 }
             }
         }
@@ -194,11 +198,13 @@ public class Solver {
             private String token = "";
 
             public Cell(){
-                setStyle("-fx-border-color: black");
-                setOnMouseClicked(e -> onMouseClick());
+                setPrefSize(Integer.MAX_VALUE,Integer.MAX_VALUE);
+                setStyle("-fx-border-color: red");
+                setOnMouseClicked(e -> onMouseClick(e));
             }
 
-            public void onMouseClick(){
+            public void onMouseClick(MouseEvent e){
+                System.out.println(e.getSource());
                 if (scherm.equals("speelscherm")) {
                     if (!hasToken()) {
                         User player = getCurrentPlayer();

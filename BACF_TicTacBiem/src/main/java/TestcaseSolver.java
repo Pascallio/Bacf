@@ -1,4 +1,5 @@
 import com.sun.imageio.plugins.gif.GIFImageReader;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -33,12 +34,12 @@ public class TestcaseSolver {
                 // a token, a error message will be displayed.
                 // This doesn't have to be called, but calling the method will
                 // demonstrate its function.
-                smallCell.onMouseClick();
+                //smallCell.onMouseClick();
 
                 // Add a few more tokens
-                bigCell.getSmallCells(1, 0).onMouseClick();
-                bigCell.getSmallCells(2, 0).onMouseClick();
-                bigCell.getSmallCells(2, 0).onMouseClick();
+                //bigCell.getSmallCells(1, 0).onMouseClick();
+                //bigCell.getSmallCells(2, 0).onMouseClick();
+                //bigCell.getSmallCells(2, 0).onMouseClick();
 
 
                 // How to check if a big cell has won
