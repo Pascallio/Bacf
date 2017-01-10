@@ -70,26 +70,27 @@ public class instellingenController implements Initializable {
         cb_avatarSpeler1.getItems().addAll("Bomb", "Cat", "Devil", "Ninja", "Sheep", "Shroom", "Trippy", "Unknown");
         cb_avatarSpeler2.getItems().addAll("Bomb", "Cat", "Devil", "Ninja", "Sheep", "Shroom", "Trippy", "Unknown");
         cb_avatarSpeler1.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.equals("Devil")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\devil_icon.png";
-            } else if (newValue.equals("Bomb")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\bomb_icon.jpg";
-            } else if (newValue.equals("Cat")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\cat_icon.jpg";
-            }else if (newValue.equals("Ninja")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\ninja_icon.jpg";
-            }else if (newValue.equals("Sheep")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\sheep_icon.png";
-            }else if (newValue.equals("Shroom")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\shroom_icon.png";
-            }else if (newValue.equals("Trippy")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\trip_icon.png";
-            }else if (newValue.equals("Unknown")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\unknown_icon.jpg";
-            } else {
-                bufferedImage = null;
-            }
-            try {
+            String path = System.getProperty("user.dir") + "/src/main/resources/";
+            switch (newValue.toString()) {
+                case "Devil" : path = path + "devil_icon.png";
+                    break;
+                case "Bomb" : path = path + "bomb_icon.jpg";
+                    break;
+                case "Cat" : path = path + "cat_icon.jpg";
+                    break;
+                case "Ninja" : path = path + "ninja_icon.jpg";
+                    break;
+                case "Sheep" : path = path + "sheep_icon.png";
+                    break;
+                case "Shroom" : path = path + "shroom_icon.png";
+                    break;
+                case "Trippy" : path = path + "trip_icon.png";
+                    break;
+                case "Unknown" : path = path + "unknown_icon.jpg";
+                    break;
+                default : bufferedImage = null;
+                    break;
+            } try {
                 bufferedImage = ImageIO.read(new File(path));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -99,26 +100,27 @@ public class instellingenController implements Initializable {
             outPath1 = path;
         });
         cb_avatarSpeler2.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.equals("Devil")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\devil_icon.png";
-            } else if (newValue.equals("Bomb")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\bomb_icon.jpg";
-            } else if (newValue.equals("Cat")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\cat_icon.jpg";
-            }else if (newValue.equals("Ninja")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\ninja_icon.jpg";
-            }else if (newValue.equals("Sheep")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\sheep_icon.png";
-            }else if (newValue.equals("Shroom")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\shroom_icon.png";
-            }else if (newValue.equals("Trippy")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\trip_icon.png";
-            }else if (newValue.equals("Unknown")) {
-                path = "C:\\Users\\Maurits\\Desktop\\BACF_TicTacBiem\\src\\main\\resources\\unknown_icon.jpg";
-            } else {
-                bufferedImage = null;
-            }
-            try {
+            String path = System.getProperty("user.dir") + "/src/main/resources/";
+            switch (newValue.toString()) {
+                case "Devil" : path = path + "devil_icon.png";
+                    break;
+                case "Bomb" : path = path + "bomb_icon.jpg";
+                    break;
+                case "Cat" : path = path + "cat_icon.jpg";
+                    break;
+                case "Ninja" : path = path + "ninja_icon.jpg";
+                    break;
+                case "Sheep" : path = path + "sheep_icon.png";
+                    break;
+                case "Shroom" : path = path + "shroom_icon.png";
+                    break;
+                case "Trippy" : path = path + "trip_icon.png";
+                    break;
+                case "Unknown" : path = path + "unknown_icon.jpg";
+                    break;
+                default : bufferedImage = null;
+                    break;
+            } try {
                 bufferedImage = ImageIO.read(new File(path));
             } catch (IOException e) {
                 e.printStackTrace();
