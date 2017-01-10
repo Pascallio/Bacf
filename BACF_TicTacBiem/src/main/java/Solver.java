@@ -1,8 +1,13 @@
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.*;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
+import javafx.scene.paint.Color;
 
 import java.awt.*;
 
@@ -19,14 +24,17 @@ public class Solver {
     private User[] players;
     private BigCell[][] totalSolver = new BigCell[3][3];
     private GridPane pane;
+    private Integer new_pos = 4;
 
     public Solver(User[] players, GridPane pane, String scherm){
         this.players = players;
         this.scherm = scherm;
         this.pane = pane;
+        int count = 0;
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
-                pane.add(totalSolver[i][j] = new BigCell(), j, i);
+                pane.add(totalSolver[i][j] = new BigCell(count), j, i);
+                count += 1;
             }
         }
     }
@@ -36,11 +44,18 @@ public class Solver {
         this.scherm = scherm;
         this.lifes = lifes;
         this.bombs = lifes;
+        int count = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                pane.add(totalSolver[i][j] = new BigCell(), j, i);
+                pane.add(totalSolver[i][j] = new BigCell(count), j, i);
+                count += 1;
             }
         }
+    }
+
+    public void setBigBorder(int old){
+        this.pane.setStyle("-fx-border-color: red;-fx-border-width: 5px;");
+        this.pane.getChildren().get(old).setStyle("-fx-border-color: white");
     }
 
     public void setScherm(String scherm){
@@ -104,9 +119,9 @@ public class Solver {
 
     private boolean isRowWon(String token){
         for (int i = 0; i < 3; i++){
-            if (totalSolver[i][0].isWon(token) &&
-                    totalSolver[i][1].isWon(token) &&
-                    totalSolver[i][2].isWon(token)){
+            if (totalSolver[i][0].isSmallWon(token) &&
+                    totalSolver[i][1].isSmallWon(token) &&
+                    totalSolver[i][2].isSmallWon(token)){
                 return true;
             }
         }
@@ -115,9 +130,9 @@ public class Solver {
 
     private boolean isColumnWon(String token){
         for (int i = 0; i < 3; i++){
-            if (totalSolver[0][i].isWon(token) &&
-                    totalSolver[1][i].isWon(token) &&
-                    totalSolver[2][i].isWon(token)){
+            if (totalSolver[0][i].isSmallWon(token) &&
+                    totalSolver[1][i].isSmallWon(token) &&
+                    totalSolver[2][i].isSmallWon(token)){
                 return true;
             }
         }
@@ -125,22 +140,37 @@ public class Solver {
     }
 
     private boolean isDiagonalWon(String token) {
-        return totalSolver[0][0].isWon(token) && totalSolver[1][1].isWon(token) &&
-                totalSolver[2][2].isWon(token) || totalSolver[0][2].isWon(token) &&
-                totalSolver[1][1].isWon(token) && totalSolver[2][0].isWon(token);
+        return totalSolver[0][0].isSmallWon(token) && totalSolver[1][1].isSmallWon(token) &&
+                totalSolver[2][2].isSmallWon(token) || totalSolver[0][2].isSmallWon(token) &&
+                totalSolver[1][1].isSmallWon(token) && totalSolver[2][0].isSmallWon(token);
     }
 
     public class BigCell extends GridPane {
 
         private Cell[][] cell = new Cell[3][3];
 
-        public BigCell(){
-            setStyle("-fx-border-color: blue");
+        public BigCell(int counting){
+
             //setStyle("-fx-background-color: transparent;");
+            int count = 0;
             for (int i = 0; i < 3; i++){
                 for (int j = 0; j < 3; j++){
-                    this.add(cell[i][j] = new Cell(), j, i);
+                    this.add(cell[i][j] = new Cell(counting, count), j, i);
+                    count += 1;
                 }
+            }
+            setStyle("-fx-border-color: white");
+            if (counting == 4){
+                setStyle("-fx-border-color: red;-fx-border-width: 5px");
+            }
+            //setStyle("-fx-border-radius: 5;");
+        }
+
+        public void setCustomBorder(String css, int big, int old){
+            if (big != old) {
+                getParent().getChildrenUnmodifiable().get(big).setStyle(css);
+                getParent().getChildrenUnmodifiable().get(big).setStyle(css +";-fx-border-width: 5px;");
+                getParent().getChildrenUnmodifiable().get(old).setStyle("-fx-border-color: white");
             }
         }
 
@@ -159,7 +189,7 @@ public class Solver {
             return true;
         }
 
-        public boolean isWon(String token){
+        public boolean isSmallWon(String token){
             return isRowWon(token) || isColumnWon(token) || isDiagonalWon(token);
         }
 
@@ -196,26 +226,47 @@ public class Solver {
 
             private Boolean bomb;
             private String token = "";
+            private int position = 4;
+            private int bigPosition;
 
-            public Cell(){
+            public Cell(int groot, int klein){
+                this.position = klein;
+                this.bigPosition = groot;
                 setPrefSize(Integer.MAX_VALUE,Integer.MAX_VALUE);
-                setStyle("-fx-border-color: red");
+                setStyle("-fx-border-color: black");
                 setOnMouseClicked(e -> onMouseClick(e));
             }
 
             public void onMouseClick(MouseEvent e){
-                System.out.println(e.getSource());
+                System.out.println(this.bigPosition);
+                System.out.println(new_pos);
                 if (scherm.equals("speelscherm")) {
-                    if (!hasToken()) {
-                        User player = getCurrentPlayer();
-                        setToken(player.getToken());
-                        System.out.println("Token placed!");
-                        if (hasBomb()){
-                            player.setNumOfLifes(player.getNumOfLifes() - 1);
+                    //if (!isWon("X") && !isWon("O")){
+                    if (!isSmallWon("X") && !isSmallWon("O")){
+                        if (!hasToken()) {
+                            if (new_pos == this.bigPosition) {
+                                User player = getCurrentPlayer();
+                                setToken(player.getToken());
+                                new_pos = this.position;
+                                System.out.println(this.position);
+
+                                System.out.println("Token placed!");
+                                switchPlayer();
+                                System.out.println(isSmallWon(player.getToken()));
+                                setCustomBorder("-fx-border-color: red", this.position, this.bigPosition);
+                                if (hasBomb()) {
+                                    player.setNumOfLifes(player.getNumOfLifes() - 1);
+                                }
+                            }
+
+                        } else {
+                            System.out.println("Already has a token!");
                         }
                     } else {
-                        System.out.println("Already has a token!");
+                        setBigBorder(this.bigPosition);
                     }
+
+
                 } else {
                     if (!hasBomb()){
                         System.out.println("Bomb placed!");
@@ -228,6 +279,31 @@ public class Solver {
 
             public void setToken(String token){
                 this.token = token;
+                if (token.equals("X")) {
+                    Line line1 = new Line(10, 10, this.getWidth() - 10, this.getHeight() - 10);
+                    line1.endXProperty().bind(this.widthProperty().subtract(10));
+                    line1.endYProperty().bind(this.heightProperty().subtract(10));
+
+                    Line line2 = new Line(10, this.getHeight() - 10, this.getWidth() - 10, 10);
+                    line2.endXProperty().bind(this.widthProperty().subtract(10));
+                    line2.startYProperty().bind(this.heightProperty().subtract(10));
+
+                    this.getChildren().addAll(line1, line2);
+                }
+                else{
+                    Ellipse ellipse = new Ellipse(this.getWidth() / 2, this.getHeight() / 2,
+                            this.getWidth() / 2 - 10, this.getHeight() / 2 - 10);
+                    ellipse.centerXProperty().bind(this.widthProperty().divide(2));
+                    ellipse.centerYProperty().bind(this.heightProperty().divide(2));
+                    ellipse.radiusXProperty().bind(this.widthProperty().divide(2).subtract(10));
+                    ellipse.radiusYProperty().bind(this.heightProperty().divide(2).subtract(10));
+
+                    ellipse.setStroke(Color.BLACK);
+                    ellipse.setFill(Color.WHITE);
+
+                    this.getChildren().add(ellipse);
+
+                }
             }
 
             public String getToken(){

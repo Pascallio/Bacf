@@ -43,7 +43,7 @@ public class TestcaseSolver {
 
 
                 // How to check if a big cell has won
-                boolean won = bigCell.isWon(player.getToken());
+                boolean won = bigCell.isSmallWon(player.getToken());
 
                 // How to check if a big cell is full.
                 boolean full = bigCell.isFull();
