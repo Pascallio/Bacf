@@ -44,8 +44,6 @@ public class instellingenController implements Initializable {
     @FXML private ComboBox cb_maxPerField;
     @FXML private ComboBox cb_timeLimit;
 
-
-
     public void initialize(URL location, ResourceBundle resources) {
         initialize();
     }
@@ -154,30 +152,25 @@ public class instellingenController implements Initializable {
             naamBeurt = tf_naamSpeler2.getText();
         }
 
-        if (cb_timeLimit.getSelectionModel().getSelectedItem().equals("On")) {
-            System.out.println("TIJDLIMIET meegeven naar speelscherm als deze aan staat.");
-            System.out.println(timeLabel.getText());
-        }
-
         if (tf_naamSpeler1.getText().length() < 3) {
-            errorLabel.setText("Naam speler 1 moet langer zijn dan 2 karakters.");
+            errorLabel.setText("Name of player 1 has to be longer than 2 characters.");
         } else if (tf_naamSpeler2.getText().length() < 3) {
-            errorLabel.setText("Naam speler 2 moet langer zijn dan 2 karakters.");
+            errorLabel.setText("Name of player 2 has to be longer than 2 characters.");
         } else if (tf_naamSpeler1.getText().equals(tf_naamSpeler2.getText())) {
-            errorLabel.setText("Namen van de spelers mogen niet hetzelfde zijn.");
+            errorLabel.setText("Names of both players can't be the same.");
         } else if (cb_avatarSpeler1.getSelectionModel().getSelectedItem() == null) {
-            errorLabel.setText("Speler 1 moet een avatar selecteren.");
+            errorLabel.setText("Player 1 has to pick an avatar.");
         } else if (cb_avatarSpeler2.getSelectionModel().getSelectedItem() == null) {
-            errorLabel.setText("Speler 2 moet een avatar selecteren.");
+            errorLabel.setText("Player 2 has to pick an avatar.");
         } else if (cb_avatarSpeler1.getSelectionModel().getSelectedItem().equals(cb_avatarSpeler2.getSelectionModel().getSelectedItem())) {
-            errorLabel.setText("Avatars van de spelers mogen niet hetzelfde zijn.");
+            errorLabel.setText("Avatars of both players can't be the same.");
         } else if (cb_bombs.getSelectionModel().getSelectedItem().equals("On")) {
             if (cb_bombsPerPlayer.getSelectionModel().getSelectedItem() == null) {
-                errorLabel.setText("Het aantal bommen per speler moet worden gekozen.");
+                errorLabel.setText("The amount of bombs per player has to be chosen.");
             } else if (cb_lifesPerPlayer.getSelectionModel().getSelectedItem() == null) {
-                errorLabel.setText("Het aantal levens per speler moet worden gekozen.");
+                errorLabel.setText("The amount of lifes per player has to be chosen.");
             } else if (cb_maxPerField.getSelectionModel().getSelectedItem() == null) {
-                errorLabel.setText("Het maximaal aantal bommen per veld moet worden gekozen.");
+                errorLabel.setText("The maximum amount of bombs per field has to be chosen.");
             } else {
                 initiatieController.setPaths(outPath1, outPath2);
 
@@ -190,16 +183,20 @@ public class instellingenController implements Initializable {
                 Scene scene = new Scene(root);
                 controller.lbl_naam1.setText(tf_naamSpeler1.getText());
                 controller.lbl_naam2.setText(tf_naamSpeler2.getText());
-                controller.lbl_naamBeurt.setText(naamBeurt);
+                controller.lbl_naamBeurt.setText("Turn of: " + naamBeurt);
                 String bommen = cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString();
                 controller.lbl_bommen1.setText(bommen);
                 controller.lbl_bommen2.setText(bommen);
                 Integer bombs = Integer.parseInt(bommen)*2;
                 controller.lbl_totaalBommen.setText(bombs.toString());
 
-                //LEVENS HIER NOG MEEGEVEN VOOR SPEELSCHERM LATER
-                //check wrm hieronder
+                String levens = cb_lifesPerPlayer.getSelectionModel().getSelectedItem().toString();
+                controller.levens1 = levens;
+                controller.levens2 = levens;
 
+                if (cb_timeLimit.getSelectionModel().getSelectedItem().equals("On")) {
+                    controller.totalTime = Integer.parseInt(timeLabel.getText());
+                }
                 stage.setScene(scene);
                 stage.show();
             }
@@ -211,17 +208,18 @@ public class instellingenController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("speelscherm.fxml"));
             Parent root = loader.load();
-
             speelController controller = loader.getController();
-            Scene scene = new Scene(root);
+
+
             controller.lbl_naam1.setText(tf_naamSpeler1.getText());
             controller.lbl_naam2.setText(tf_naamSpeler2.getText());
-            controller.lbl_naamBeurt.setText(naamBeurt);
-            //String levens = cb_lifesPerPlayer.getSelectionModel().getSelectedItem().toString();
-            //controller.lbl_levens1.setText(levens);
-            //controller.lbl_levens2.setText(levens);
-            controller.lbl_timeLimit.setText(timeLabel.getText());
-
+            controller.lbl_naamBeurt.setText("Turn of: " + naamBeurt);
+            controller.lbl_levens1.setText("");
+            controller.lbl_levens2.setText("");
+            if (cb_timeLimit.getSelectionModel().getSelectedItem().equals("On")) {
+                controller.totalTime = Integer.parseInt(timeLabel.getText());
+            }
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }

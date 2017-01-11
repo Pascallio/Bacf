@@ -32,10 +32,17 @@ public class initiatieController implements Initializable {
     @FXML Label lbl_bommen2;
     @FXML Label lbl_totaalBommen;
 
-    public static void setPaths (String path1, String path2) {
+    @FXML String levens1;
+    @FXML String levens2;
+    @FXML String timeLimit = "";
+    @FXML int totalTime;
+
+
+    public static void setPaths(String path1, String path2) {
         inPath1 = path1;
         inPath2 = path2;
     }
+
     public void initialize(URL location, ResourceBundle resources) {
         try {
             bufferedImage1 = ImageIO.read(new File(inPath1));
@@ -53,29 +60,38 @@ public class initiatieController implements Initializable {
         main = mainController;
     }
 
-    public void quitKlikken () {
+    public void quitKlikken() {
         System.exit(0);
     }
-    public void playKlikken (ActionEvent event) throws IOException {
-        System.out.println("Check toevoegen doorgaan naar speelscherm als aantal bommen totaal 0 is.");
+
+    public void playKlikken(ActionEvent event) throws IOException {
+        System.out.println("Check goedzetten na testen, doorgaan!");
 
         int bommen = Integer.parseInt(lbl_totaalBommen.getText());
-        if (bommen < 1) {
+        if (bommen < 3) { //                                < 1 of == 0, dit neergezet voor testen!
+            speelController.setPaths(inPath1, inPath2);
+
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("speelscherm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("speelscherm.fxml"));
+            Parent root = loader.load();
+            speelController controller = loader.getController();
             Scene scene = new Scene(root);
+
+            controller.lbl_naam1.setText(lbl_naam1.getText());
+            controller.lbl_naam2.setText(lbl_naam2.getText());
+            controller.lbl_naamBeurt.setText(lbl_naamBeurt.getText());
+            controller.lbl_levens1.setText(levens1);
+            controller.lbl_levens2.setText(levens2);
+
+            if (totalTime > 9) {
+                controller.totalTime = totalTime;
+            }
             stage.setScene(scene);
             stage.show();
+        } else {
+            System.out.println("Check goedzetten na testen, errorlabel!");
+            // errorlabel tekst zetten!
         }
-
-        /*
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("speelscherm.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        */
     }
 }

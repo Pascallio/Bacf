@@ -30,9 +30,24 @@ Daaronder komen alle elementen die op de pane staan. De elementen met een 'fx:id
 <Button fx:id="startKnop" layoutX="546.0" layoutY="436.0" mnemonicParsing="false" onAction="#startKlikken" prefHeight="25.0" prefWidth="96.0" text="Start" />
       <Separator layoutX="19.0" layoutY="418.0" prefHeight="4.0" prefWidth="659.0" />
       <Separator layoutX="19.0" layoutY="51.0" prefHeight="4.0" prefWidth="659.0" />
-      <Label layoutX="277.0" layoutY="235.0" text="REGELS etc label">
+      <Label fx:id="generalLabel" alignment="TOP_LEFT" layoutX="42.0" layoutY="101.0" prefHeight="304.0" prefWidth="178.0" text="REGELS etc label" wrapText="true">
+         <font>
+            <Font size="12.5" />
+         </font>
+      </Label>
+      <Label layoutX="74.0" layoutY="55.0" prefHeight="46.0" prefWidth="659.0" text="General                            Bombs                             Time">
          <font>
             <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="bombsLabel" alignment="TOP_LEFT" layoutX="241.0" layoutY="101.0" prefHeight="266.0" prefWidth="178.0" text="Label" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="timeLabel" alignment="TOP_LEFT" layoutX="447.0" layoutY="101.0" prefHeight="311.0" prefWidth="178.0" text="Label" wrapText="true">
+         <font>
+            <Font size="14.0" />
          </font>
       </Label>
 </children>
