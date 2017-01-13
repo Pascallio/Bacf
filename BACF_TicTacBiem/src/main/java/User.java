@@ -4,7 +4,6 @@
 public class User {
 
     private String name;
-    private String avatar;
     private int numOfLifes = 0;
     private int numOfBombs = 0;
     private int time;
@@ -14,15 +13,13 @@ public class User {
 
     }
 
-    public User(String name, String avatar, String token){
+    public User(String name, String token){
         this.name = name;
-        this.avatar = avatar;
         this.token = token;
     }
 
-    public User(String name, String avatar, String token, int numOfLifes, int numOfBombs){
+    public User(String name, String token, int numOfLifes, int numOfBombs){
         this.name = name;
-        this.avatar = avatar;
         this.numOfLifes = numOfLifes;
         this.numOfBombs = numOfBombs;
         this.token = token;
@@ -66,10 +63,6 @@ public class User {
     @Override
     public String toString(){
         return this.name;
-    }
-
-    public String getAvatar(){
-        return this.avatar;
     }
 
     public void setToken(String token){
