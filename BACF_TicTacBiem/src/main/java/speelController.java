@@ -34,16 +34,18 @@ public class speelController implements Initializable {
     @FXML Label lbl_timeLimit;
     @FXML Integer totalTime = 0;
 
+    @FXML static Solver solve;
+
     public static void setPaths (String path1, String path2) {
         inPath1 = path1;
         inPath2 = path2;
     }
 
+    public static void setSolver(Solver solver) {
+        solve = solver;
+    }
+
     public void initialize(URL location, ResourceBundle resources) {
-        Solver control = new Solver(new User[]{
-                new User("naam1", "avatar1", "X"),
-                new User("naam2", "avatar2", "O")}, this.speelGridPane,
-                "speelscherm");
         try {
             bufferedImage1 = ImageIO.read(new File(inPath1));
             bufferedImage2 = ImageIO.read(new File(inPath2));

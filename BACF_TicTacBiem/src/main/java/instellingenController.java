@@ -178,8 +178,15 @@ public class instellingenController implements Initializable {
                 Stage stage = (Stage) node.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("initiatiescherm.fxml"));
                 Parent root = loader.load();
-
                 initiatieController controller = loader.getController();
+
+                int levensps = Integer.parseInt(cb_lifesPerPlayer.getSelectionModel().getSelectedItem().toString());
+                int bommenps = Integer.parseInt(cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString());
+                Solver control = new Solver(new User[]{
+                        new User("naam1", "X"),
+                        new User("naam2",  "O")}, controller.initGridPane,
+                        "initiatiescherm", levensps, bommenps);
+
                 Scene scene = new Scene(root);
                 controller.lbl_naam1.setText(tf_naamSpeler1.getText());
                 controller.lbl_naam2.setText(tf_naamSpeler2.getText());
@@ -210,6 +217,11 @@ public class instellingenController implements Initializable {
             Parent root = loader.load();
             speelController controller = loader.getController();
 
+            Solver control = new Solver(new User[]{
+                    new User("naam1", "X"),
+                    new User("naam2", "O")}, controller.speelGridPane,
+                    "speelscherm");
+            controller.setSolver(control);
 
             controller.lbl_naam1.setText(tf_naamSpeler1.getText());
             controller.lbl_naam2.setText(tf_naamSpeler2.getText());

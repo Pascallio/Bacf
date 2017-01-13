@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class initiatieController implements Initializable {
     public MainController main;
+    @FXML public GridPane initGridPane;
     @FXML ImageView iv_avatar1;
     @FXML ImageView iv_avatar2;
     @FXML static String inPath1;
@@ -37,10 +39,15 @@ public class initiatieController implements Initializable {
     @FXML String timeLimit = "";
     @FXML int totalTime;
 
+    @FXML static Solver solve;
 
     public static void setPaths(String path1, String path2) {
         inPath1 = path1;
         inPath2 = path2;
+    }
+
+    public static void setSolver(Solver solver) {
+        solve = solver;
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -77,6 +84,8 @@ public class initiatieController implements Initializable {
             Parent root = loader.load();
             speelController controller = loader.getController();
             Scene scene = new Scene(root);
+
+            controller.setSolver(solve);
 
             controller.lbl_naam1.setText(lbl_naam1.getText());
             controller.lbl_naam2.setText(lbl_naam2.getText());
