@@ -170,15 +170,21 @@ public class Solver {
             }
         }
 
-        public void setFirstReady(String css, int big, int old){
+        public int setFirstReady(String css, int old){
+            boolean set = false;
+            int big = 0;
             for (int i = 0; i < 3; i++){
                 for (int j = 0; j < 3; j++){
                     if (!totalSolver[i][j].isFull()) {
+                        big = i*3+j;
                         setCustomBorder(css, big, old);
-                        break;
+                        set=true;
                     }
+                    if (set){break;}
                 }
+                if (set){break;}
             }
+            return big;
         }
 
         public Cell getSmallCells(int row, int column){
@@ -253,16 +259,16 @@ public class Solver {
                         if (new_pos == this.bigPosition) { //is in het juiste vakje?
                             User player = getCurrentPlayer();
                             setToken(player.getToken());
-                            if(!totalSolver[new_pos/3][new_pos%3].isFull()) {
-                                new_pos = this.position;
-                                System.out.println(this.position);
-                            } else {
-                                setFirstReady("-fx-border-color: red", this.position, this.bigPosition);
-                            }
+                            System.out.println(this.position);
                             System.out.println("Token placed!");
                             switchPlayer();
-                            System.out.println(isSmallWon(player.getToken()));
-                            setCustomBorder("-fx-border-color: red", this.position, this.bigPosition);
+                            System.err.println(totalSolver[this.position/3][this.position%3].isFull());
+                            if(!totalSolver[this.position/3][this.position%3].isFull()) {
+                                new_pos = this.position;
+                                setCustomBorder("-fx-border-color: red", this.position, this.bigPosition);
+                            } else {
+                                new_pos = setFirstReady("-fx-border-color: red", this.bigPosition);
+                            }
                             if (hasBomb()) {
                                 player.setNumOfLifes(player.getNumOfLifes() - 1);
                             }
