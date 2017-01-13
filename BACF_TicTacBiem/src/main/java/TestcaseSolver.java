@@ -15,7 +15,7 @@ public class TestcaseSolver {
 
     public static void main(String args[]) {
             // Check if all (big) fields are full of tokens, if not: proceed
-            if (!control.isFull()) {
+            if (!control.isFullyFull()) {
 
                 /* To make a move, select a single cell in (column, row) format:
                  * (0, 0) = most upper left

@@ -1,23 +1,19 @@
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.*;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
-
-import java.awt.*;
 
 /**
  * Created by pascal on 3-1-17.
  */
 public class Solver {
 
-    private boolean lifes = false;
-    private boolean bombs = false;
+    private int lifes;
+    private int bombs;
     private String scherm;
     private int currentPlayer = 1;
     private User winner;
@@ -39,11 +35,11 @@ public class Solver {
         }
     }
 
-    public Solver(User[] players, GridPane pane, String scherm, boolean lifes) {
+    public Solver(User[] players, GridPane pane, String scherm, int lifes, int bombs) {
         this.players = players;
         this.scherm = scherm;
         this.lifes = lifes;
-        this.bombs = lifes;
+        this.bombs = bombs;
         int count = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -82,11 +78,11 @@ public class Solver {
         }
     }
 
-    public boolean hasLifesOn(){
+    public int hasLifesOn(){
         return this.lifes;
     }
 
-    public boolean hasBombsOn(){
+    public int hasBombsOn(){
         return this.bombs;
     }
 
@@ -94,7 +90,7 @@ public class Solver {
         return this.totalSolver[row][column];
     }
 
-    public boolean isFull(){
+    public boolean isFullyFull(){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (!totalSolver[i][j].isFull()){
@@ -174,6 +170,17 @@ public class Solver {
             }
         }
 
+        public void setFirstReady(String css, int big, int old){
+            for (int i = 0; i < 3; i++){
+                for (int j = 0; j < 3; j++){
+                    if (!totalSolver[i][j].isFull()) {
+                        setCustomBorder(css, big, old);
+                        break;
+                    }
+                }
+            }
+        }
+
         public Cell getSmallCells(int row, int column){
             return this.cell[row][column];
         }
@@ -242,31 +249,27 @@ public class Solver {
                 System.out.println(new_pos);
                 if (scherm.equals("speelscherm")) {
                     //if (!isWon("X") && !isWon("O")){
-                    if (!isSmallWon("X") && !isSmallWon("O")){
-                        if (!hasToken()) {
-                            if (new_pos == this.bigPosition) {
-                                User player = getCurrentPlayer();
-                                setToken(player.getToken());
+                    if (!hasToken()) {  //heeft geen token?
+                        if (new_pos == this.bigPosition) { //is in het juiste vakje?
+                            User player = getCurrentPlayer();
+                            setToken(player.getToken());
+                            if(!totalSolver[new_pos/3][new_pos%3].isFull()) {
                                 new_pos = this.position;
                                 System.out.println(this.position);
-
-                                System.out.println("Token placed!");
-                                switchPlayer();
-                                System.out.println(isSmallWon(player.getToken()));
-                                setCustomBorder("-fx-border-color: red", this.position, this.bigPosition);
-                                if (hasBomb()) {
-                                    player.setNumOfLifes(player.getNumOfLifes() - 1);
-                                }
+                            } else {
+                                setFirstReady("-fx-border-color: red", this.position, this.bigPosition);
                             }
-
-                        } else {
-                            System.out.println("Already has a token!");
+                            System.out.println("Token placed!");
+                            switchPlayer();
+                            System.out.println(isSmallWon(player.getToken()));
+                            setCustomBorder("-fx-border-color: red", this.position, this.bigPosition);
+                            if (hasBomb()) {
+                                player.setNumOfLifes(player.getNumOfLifes() - 1);
+                            }
                         }
                     } else {
-                        setBigBorder(this.bigPosition);
+                        System.out.println("Already has a token!");
                     }
-
-
                 } else {
                     if (!hasBomb()){
                         System.out.println("Bomb placed!");
