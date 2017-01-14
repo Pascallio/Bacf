@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class initiatieController implements Initializable {
     public MainController main;
-    @FXML public GridPane initGridPane;
+    @FXML public GridPane speelGridPane;
     @FXML ImageView iv_avatar1;
     @FXML ImageView iv_avatar2;
     @FXML static String inPath1;
@@ -85,7 +85,7 @@ public class initiatieController implements Initializable {
             speelController controller = loader.getController();
             Scene scene = new Scene(root);
 
-            controller.setSolver(solve);
+            speelController.setSolver(solve);
 
             controller.lbl_naam1.setText(lbl_naam1.getText());
             controller.lbl_naam2.setText(lbl_naam2.getText());

@@ -1,11 +1,19 @@
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by pascal on 3-1-17.
@@ -19,8 +27,9 @@ public class Solver {
     private User winner;
     private User[] players;
     private BigCell[][] totalSolver = new BigCell[3][3];
-    private GridPane pane;
+    public GridPane pane;
     private Integer new_pos = 4;
+
 
     public Solver(User[] players, GridPane pane, String scherm){
         this.players = players;
@@ -40,6 +49,7 @@ public class Solver {
         this.scherm = scherm;
         this.lifes = lifes;
         this.bombs = bombs;
+        this.pane = pane;
         int count = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -156,7 +166,7 @@ public class Solver {
                 }
             }
             setStyle("-fx-border-color: white");
-            if (counting == 4){
+            if (counting == 4 && scherm.equals("speelscherm")){
                 setStyle("-fx-border-color: red;-fx-border-width: 5px");
             }
             //setStyle("-fx-border-radius: 5;");
@@ -241,6 +251,8 @@ public class Solver {
             private String token = "";
             private int position = 4;
             private int bigPosition;
+            private BufferedImage bufferedImage;
+            private Image image;
 
             public Cell(int groot, int klein){
                 this.position = klein;
@@ -325,6 +337,24 @@ public class Solver {
 
             public void setBomb(){
                 this.bomb = true;
+                String path = System.getProperty("user.dir") + "/src/main/resources/bomb_play.png";
+                System.out.println(path);
+                try {
+                    bufferedImage = ImageIO.read(new File(path));
+                    System.out.println(bufferedImage.toString());
+                    image = SwingFXUtils.toFXImage(bufferedImage, null);
+                    ImageView view = new ImageView(image);
+                    view.fitHeightProperty().bind(this.heightProperty());
+                    view.fitWidthProperty().bind(this.widthProperty());
+                    this.getChildren().add(view);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage() + "asdasdsad");
+                    bufferedImage = null;
+                } catch (NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
+
+
             }
 
             public boolean getBomb(){

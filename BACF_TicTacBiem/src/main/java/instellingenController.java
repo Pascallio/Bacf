@@ -184,7 +184,7 @@ public class instellingenController implements Initializable {
                 int bommenps = Integer.parseInt(cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString());
                 Solver control = new Solver(new User[]{
                         new User("naam1", "X"),
-                        new User("naam2",  "O")}, controller.initGridPane,
+                        new User("naam2",  "O")}, controller.speelGridPane,
                         "initiatiescherm", levensps, bommenps);
 
                 Scene scene = new Scene(root);
@@ -221,7 +221,6 @@ public class instellingenController implements Initializable {
                     new User("naam1", "X"),
                     new User("naam2", "O")}, controller.speelGridPane,
                     "speelscherm");
-            controller.setSolver(control);
 
             controller.lbl_naam1.setText(tf_naamSpeler1.getText());
             controller.lbl_naam2.setText(tf_naamSpeler2.getText());
