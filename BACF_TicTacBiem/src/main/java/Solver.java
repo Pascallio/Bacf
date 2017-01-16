@@ -31,7 +31,7 @@ public class Solver {
     public GridPane pane;
     private Integer new_pos = 4;
     private ArrayList<int[]> bomb_list = new ArrayList<>();
-
+    private String path = System.getProperty("user.dir") + "/src/main/resources/bomb_play.png";
 
     public Solver(User[] players, GridPane pane, String scherm){
         this.players = players;
@@ -159,8 +159,6 @@ public class Solver {
         private Cell[][] cell = new Cell[3][3];
 
         public BigCell(int counting){
-
-            //setStyle("-fx-background-color: transparent;");
             int count = 0;
             for (int i = 0; i < 3; i++){
                 for (int j = 0; j < 3; j++){
@@ -172,7 +170,6 @@ public class Solver {
             if (counting == 4 && scherm.equals("speelscherm")){
                 setStyle("-fx-border-color: red;-fx-border-width: 5px");
             }
-            //setStyle("-fx-border-radius: 5;");
         }
 
         public void setCustomBorder(String css, int big, int old){
@@ -254,7 +251,6 @@ public class Solver {
             private String token = "";
             private int position = 4;
             private int bigPosition;
-            private BufferedImage bufferedImage;
             private Image image;
             private ImageView view;
 
@@ -353,13 +349,10 @@ public class Solver {
             public void setBomb(){
                 this.bomb = true;
                 getCurrentPlayer().setBombs();
-                //initiatiescherm().update(getCurrentPlayer(), getCurrentPlayer().getBombs());
+                //initiatiescherm().update(getCurrentPlayer(), getCurrentPlayer().getBombs(), hasTotalBombsLeft());
                 bomb_list.add(new int[]{this.bigPosition, this.position});
-                String path = System.getProperty("user.dir") + "/src/main/resources/bomb_play.png";
                 try {
-                    bufferedImage = ImageIO.read(new File(path));
-                    System.out.println(bufferedImage.toString());
-                    image = SwingFXUtils.toFXImage(bufferedImage, null);
+                    image = SwingFXUtils.toFXImage(ImageIO.read(new File(path)), null);
                     view = new ImageView(image);
                     view.fitHeightProperty().bind(this.heightProperty());
                     view.fitWidthProperty().bind(this.widthProperty());
@@ -370,8 +363,6 @@ public class Solver {
                 } catch (NullPointerException e){
                     System.out.println(e.getMessage());
                 }
-
-
             }
 
             public boolean getBomb(){
