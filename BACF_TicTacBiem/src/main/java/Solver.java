@@ -1,11 +1,11 @@
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
@@ -94,14 +94,6 @@ public class Solver {
         }
     }
 
-    public int hasLifesOn(){
-        return this.lifes;
-    }
-
-    public int hasBombsOn(){
-        return this.bombs;
-    }
-
     public BigCell getBigCells(int row, int column){
         return this.totalSolver[row][column];
     }
@@ -155,6 +147,11 @@ public class Solver {
         return totalSolver[0][0].isSmallWon(token) && totalSolver[1][1].isSmallWon(token) &&
                 totalSolver[2][2].isSmallWon(token) || totalSolver[0][2].isSmallWon(token) &&
                 totalSolver[1][1].isSmallWon(token) && totalSolver[2][0].isSmallWon(token);
+    }
+
+
+    public boolean hasTotalBombsLeft(){
+        return bombs > 0;
     }
 
     public class BigCell extends GridPane {
@@ -259,6 +256,7 @@ public class Solver {
             private int bigPosition;
             private BufferedImage bufferedImage;
             private Image image;
+            private ImageView view;
 
             public Cell(int groot, int klein){
                 this.position = klein;
@@ -269,40 +267,49 @@ public class Solver {
             }
 
             public void onMouseClick(MouseEvent e){
-                System.out.println(this.bigPosition);
-                System.out.println(new_pos);
                 if (scherm.equals("speelscherm")) {
-                    //if (!isWon("X") && !isWon("O")){
-                    if (!hasToken()) {  //heeft geen token?
-                        if (new_pos == this.bigPosition) { //is in het juiste vakje?
-                            User player = getCurrentPlayer();
-                            setToken(player.getToken());
-                            System.out.println(this.position);
-                            System.out.println("Token placed!");
-                            switchPlayer();
-                            System.err.println(totalSolver[this.position/3][this.position%3].isFull());
-                            if(!totalSolver[this.position/3][this.position%3].isFull()) {
-                                new_pos = this.position;
-                                setCustomBorder("-fx-border-color: red", this.position, this.bigPosition);
-                            } else {
-                                new_pos = setFirstReady("-fx-border-color: red", this.bigPosition);
-                            }
-                            if (hasBomb()) {
-                                player.setNumOfLifes(player.getNumOfLifes() - 1);
-                            }
-                        }
-                    } else {
-                        System.out.println("Already has a token!");
+                    speelscherm();
+                } else {
+                    initiatiescherm();
+                }
+            }
+
+            private void initiatiescherm(){
+                if (!hasBomb() && bombs > 0){
+                    setBomb();
+                } else {
+                    System.out.println("Already has a bomb!");
+                }
+            }
+
+            private void speelscherm(){
+                //if (!isWon("X") && !isWon("O")){
+                if (!hasToken()) {  //heeft geen token?
+                    if (new_pos == this.bigPosition) { //is in het juiste vakje?
+                        setToken(getCurrentPlayer().getToken());
+                        checkBombs(getCurrentPlayer());
+                        switchPlayer();
+                        setCorrectBorder();
                     }
                 } else {
-                    if (!hasBomb()){
-                        System.out.println("Bomb placed!");
-                        System.out.println(this.bigPosition + " " + this.position);
-                        bomb_list.add(new int[]{this.bigPosition, this.position});
-                        setBomb();
-                    } else {
-                        System.out.println("Already has a bomb!");
-                    }
+                    System.out.println("Already has a token!");
+                }
+            }
+
+            private void checkBombs(User player){
+                if (hasBomb()) {
+                    Main.play();
+                    view.setImage(null);
+                    player.setNumOfLifes(player.getNumOfLifes() - 1);
+                }
+            }
+
+            private void setCorrectBorder(){
+                if(!totalSolver[this.position/3][this.position%3].isFull()) {
+                    new_pos = this.position;
+                    setCustomBorder("-fx-border-color: red", this.position, this.bigPosition);
+                } else {
+                    new_pos = setFirstReady("-fx-border-color: red", this.bigPosition);
                 }
             }
 
@@ -345,13 +352,15 @@ public class Solver {
 
             public void setBomb(){
                 this.bomb = true;
+                getCurrentPlayer().setBombs();
+                //initiatiescherm().update(getCurrentPlayer(), getCurrentPlayer().getBombs());
+                bomb_list.add(new int[]{this.bigPosition, this.position});
                 String path = System.getProperty("user.dir") + "/src/main/resources/bomb_play.png";
-                System.out.println(path);
                 try {
                     bufferedImage = ImageIO.read(new File(path));
                     System.out.println(bufferedImage.toString());
                     image = SwingFXUtils.toFXImage(bufferedImage, null);
-                    ImageView view = new ImageView(image);
+                    view = new ImageView(image);
                     view.fitHeightProperty().bind(this.heightProperty());
                     view.fitWidthProperty().bind(this.widthProperty());
                     this.getChildren().add(view);

@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
@@ -21,6 +23,7 @@ import java.util.ResourceBundle;
 public class speelController implements Initializable {
     public MainController main;
     public GridPane speelGridPane;
+
     @FXML ImageView iv_avatar1;
     @FXML ImageView iv_avatar2;
     @FXML static String inPath1;

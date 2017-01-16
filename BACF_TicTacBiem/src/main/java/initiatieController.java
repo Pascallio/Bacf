@@ -104,4 +104,5 @@ public class initiatieController implements Initializable {
             // errorlabel tekst zetten!
         }
     }
+
 }

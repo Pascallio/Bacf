@@ -26,9 +26,11 @@ public class User {
 
     }
 
+    public void setBombs(){
+        this.numOfBombs -= 1;
+    }
 
-
-    public int getNumOfBombs(){
+    public int getBombs(){
         return this.numOfBombs;
     }
 
