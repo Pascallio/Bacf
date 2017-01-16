@@ -73,7 +73,7 @@ public class initiatieController implements Initializable {
 
     public void playKlikken(ActionEvent event) throws IOException {
         System.out.println("Check goedzetten na testen, doorgaan!");
-
+        System.out.println(solve.getBomb_list().size());
         int bommen = Integer.parseInt(lbl_totaalBommen.getText());
         if (bommen < 3) { //                                < 1 of == 0, dit neergezet voor testen!
             speelController.setPaths(inPath1, inPath2);
@@ -85,7 +85,8 @@ public class initiatieController implements Initializable {
             speelController controller = loader.getController();
             Scene scene = new Scene(root);
 
-            speelController.setSolver(solve);
+
+            controller.setSolver(solve);
 
             controller.lbl_naam1.setText(lbl_naam1.getText());
             controller.lbl_naam2.setText(lbl_naam2.getText());

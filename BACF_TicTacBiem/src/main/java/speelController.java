@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class speelController implements Initializable {
@@ -41,8 +42,17 @@ public class speelController implements Initializable {
         inPath2 = path2;
     }
 
-    public static void setSolver(Solver solver) {
-        solve = solver;
+    public void setSolver(Solver solver) {
+        User[] users = solver.players;
+        Solver solve = new Solver(users, speelGridPane, "speelscherm");
+        ArrayList<int[]> bommen = solver.getBomb_list();
+        for (int[] coordinaten: bommen){
+            int bigColumn = coordinaten[0] % 3;
+            int bigRow = coordinaten[0] / 3;
+            int smallColumn = coordinaten[1] % 3;
+            int smallRow = coordinaten[1] / 3;
+            solve.getBigCells(bigRow, bigColumn).getSmallCells(smallRow, smallColumn).setBomb();
+        }
     }
 
     public void initialize(URL location, ResourceBundle resources) {

@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by pascal on 3-1-17.
@@ -25,10 +26,11 @@ public class Solver {
     private String scherm;
     private int currentPlayer = 1;
     private User winner;
-    private User[] players;
+    public User[] players;
     private BigCell[][] totalSolver = new BigCell[3][3];
     public GridPane pane;
     private Integer new_pos = 4;
+    private ArrayList<int[]> bomb_list = new ArrayList<>();
 
 
     public Solver(User[] players, GridPane pane, String scherm){
@@ -57,6 +59,10 @@ public class Solver {
                 count += 1;
             }
         }
+    }
+
+    public ArrayList<int[]> getBomb_list(){
+        return this.bomb_list;
     }
 
     public void setBigBorder(int old){
@@ -291,6 +297,8 @@ public class Solver {
                 } else {
                     if (!hasBomb()){
                         System.out.println("Bomb placed!");
+                        System.out.println(this.bigPosition + " " + this.position);
+                        bomb_list.add(new int[]{this.bigPosition, this.position});
                         setBomb();
                     } else {
                         System.out.println("Already has a bomb!");
