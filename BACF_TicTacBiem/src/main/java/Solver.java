@@ -4,14 +4,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
-
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,14 +64,6 @@ public class Solver {
     public void setBigBorder(int old){
         this.pane.setStyle("-fx-border-color: red;-fx-border-width: 5px;");
         this.pane.getChildren().get(old).setStyle("-fx-border-color: white");
-    }
-
-    public void setScherm(String scherm){
-        this.scherm = scherm;
-    }
-
-    public String getScherm(){
-        return this.scherm;
     }
 
     public User getCurrentPlayer(){
@@ -242,7 +230,6 @@ public class Solver {
             return cell[0][0].getToken().equals(token) && cell[1][1].getToken().equals(token) &&
                     cell[2][2].getToken().equals(token) || cell[0][2].getToken().equals(token) &&
                     cell[1][1].getToken().equals(token) && cell[2][0].getToken().equals(token);
-
         }
 
         public class Cell extends Pane {
@@ -349,7 +336,7 @@ public class Solver {
             public void setBomb(){
                 this.bomb = true;
                 getCurrentPlayer().setBombs();
-                //initiatiescherm().update(getCurrentPlayer(), getCurrentPlayer().getBombs(), hasTotalBombsLeft());
+                //new initiatiescherm().update(getCurrentPlayer().toString(), getCurrentPlayer().getBombs(), hasTotalBombsLeft());
                 bomb_list.add(new int[]{this.bigPosition, this.position});
                 try {
                     image = SwingFXUtils.toFXImage(ImageIO.read(new File(path)), null);
@@ -357,9 +344,9 @@ public class Solver {
                     view.fitHeightProperty().bind(this.heightProperty());
                     view.fitWidthProperty().bind(this.widthProperty());
                     this.getChildren().add(view);
+                    switchPlayer();
                 } catch (IOException e) {
                     System.out.println(e.getMessage() + "asdasdsad");
-                    bufferedImage = null;
                 } catch (NullPointerException e){
                     System.out.println(e.getMessage());
                 }
@@ -372,13 +359,6 @@ public class Solver {
             public boolean hasBomb(){
                 return this.bomb != null;
             }
-
-
         }
-
     }
-
-
-
-
 }
