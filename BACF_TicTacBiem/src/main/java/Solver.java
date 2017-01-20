@@ -281,7 +281,6 @@ public class Solver {
 
             public void onMouseClick(){
                 if (scherm.equals("speelscherm")) {
-                    System.out.println(bigPosition + " " + position);
                     this.speelscherm();
                 } else {
                     initiatiescherm();

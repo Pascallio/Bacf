@@ -42,6 +42,7 @@ public class speelController implements Initializable {
 
     @FXML static Solver solve;
     private Timeline animation = new Timeline();
+    private Label test = new Label();
 
 
     public static void setPaths (String path1, String path2) {
@@ -50,8 +51,6 @@ public class speelController implements Initializable {
     }
 
     private void update(Solver.BigCell.Cell veld) {
-        final Label test;
-
         if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
             test = lbl_levens1;
         } else {
@@ -135,6 +134,7 @@ public class speelController implements Initializable {
                     if (time == 0) {
                         setFunctions();
                         initiation.stop();
+                        startPlay();
                     }
                 });
         initiation.getKeyFrames().add(0, kf1);
@@ -150,18 +150,25 @@ public class speelController implements Initializable {
                         Integer time = Integer.parseInt(lbl_timeLimit.getText());
                         time -= 1;
                         if (time == 0) {
+                            solve.getCurrentPlayer().setNumOfLifes(solve.getCurrentPlayer().getNumOfLifes() - 1);
+                            if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
+                                test = lbl_levens1;
+                            } else {
+                                test = lbl_levens2;
+                            }
+                            test.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
                             animation.stop();
                             // switch beurt aanroepen
                             // nieuwe speler mag zijn zet op alle mogelijk vlakken doen
                             time = totalTime;
-                            //animation.play();
+                            animation.play();
                         }
                         lbl_timeLimit.setText(time.toString());
                         // als speler een token heeft neergezet dan ook:
                         // time = 0 zetten?
                         // anders hele riedeltje van binnen de if
                     });
-            if (animation.getKeyFrames().size() == 0 || animation.getStatus().toString().equals("STOPPED")) {
+            if (animation.getStatus().toString().equals("STOPPED")) {
                 animation = new Timeline();
                 animation.getKeyFrames().add(0, kf2);
                 animation.setCycleCount(Animation.INDEFINITE);
