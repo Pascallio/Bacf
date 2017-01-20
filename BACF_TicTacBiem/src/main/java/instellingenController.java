@@ -146,7 +146,7 @@ public class instellingenController implements Initializable {
         System.out.println("ook eigenlijk eerst naar initiatiescherm");
         System.out.println("bij speelscherm een initialize meegeven met waar de bommen liggen + gelijk plaatsen");
 
-        if (cb_startingPlayer.getSelectionModel().getSelectedItem().equals(1)) {
+        if (cb_startingPlayer.getSelectionModel().getSelectedItem().equals("1")) {
             naamBeurt = tf_naamSpeler1.getText();
         } else {
             naamBeurt = tf_naamSpeler2.getText();
@@ -183,13 +183,10 @@ public class instellingenController implements Initializable {
                 int levensps = Integer.parseInt(cb_lifesPerPlayer.getSelectionModel().getSelectedItem().toString());
                 int bommenps = Integer.parseInt(cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString());
                 Solver control = new Solver(new User[]{
-                        new User("naam1", "X"),
-                        new User("naam2",  "O")}, controller.speelGridPane,
+                        new User(tf_naamSpeler1.getText(), "X"),
+                        new User(tf_naamSpeler2.getText(),  "O")}, controller.speelGridPane,
                         "initiatiescherm", levensps, bommenps);
                 controller.setSolver(control);
-                System.out.println(controller.solve);
-                //controller.setAction();
-
                 Scene scene = new Scene(root);
                 controller.lbl_naam1.setText(tf_naamSpeler1.getText());
                 controller.lbl_naam2.setText(tf_naamSpeler2.getText());

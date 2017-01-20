@@ -1,6 +1,8 @@
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,23 +41,75 @@ public class speelController implements Initializable {
     @FXML Integer totalTime = 0;
 
     @FXML static Solver solve;
+    private Timeline animation = new Timeline();
+
 
     public static void setPaths (String path1, String path2) {
         inPath1 = path1;
         inPath2 = path2;
     }
 
+    private void update(Solver.BigCell.Cell veld) {
+        final Label test;
+
+        if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
+            test = lbl_levens1;
+        } else {
+            test = lbl_levens2;
+        }
+
+        Runnable first = () -> {
+            if (solve.new_pos == veld.bigPosition) {
+                veld.onMouseClick();
+                test.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
+                solve.switchPlayer();
+                lbl_naamBeurt.setText("Turn of: " + solve.getCurrentPlayer().toString());
+            }
+        };
+
+
+        Task taak = new Task<Void>() {
+            @Override
+            public Void call() {
+                Platform.runLater(first);
+                return null;
+            }
+        };
+        Thread volgorde = new Thread(taak);
+        volgorde.start();
+
+        if (solve.new_pos == veld.bigPosition){
+            startPlay();
+        }
+    }
+
     public void setSolver(Solver solver) {
         User[] users = solver.players;
-        Solver solve = new Solver(users, speelGridPane, "speelscherm");
+        solve = new Solver(users, speelGridPane, "speelscherm");
         ArrayList<int[]> bommen = solver.getBomb_list();
-        for (int[] coordinaten: bommen){
+        for (int[] coordinaten : bommen) {
             int bigColumn = coordinaten[0] % 3;
             int bigRow = coordinaten[0] / 3;
             int smallColumn = coordinaten[1] % 3;
             int smallRow = coordinaten[1] / 3;
             solve.getBigCells(bigRow, bigColumn).getSmallCells(smallRow, smallColumn).setBomb();
         }
+    }
+
+    private void setFunctions(){
+        for (int i =0; i< 9; i++){
+            int bigRow = i / 3;
+            int bigColumn = i % 3;
+            for (int j = 0; j < 9; j++) {
+                int smallRow = j / 3;
+                int smallColumn = j % 3;
+                Solver.BigCell.Cell sasd = solve.getBigCells(bigRow, bigColumn).getSmallCells(smallRow, smallColumn);
+                sasd.getPane().setOnMouseClicked(e -> update(sasd));
+
+            }
+        }
+
+
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -79,13 +133,8 @@ public class speelController implements Initializable {
                     lbl_timeLimit.setText(time.toString());
 
                     if (time == 0) {
-                        if (totalTime > 9) {
-                            initiation.stop();
-                            startPlay();
-                        } else {
-                            lbl_timeLimit.setText("");
-                            initiation.stop();
-                        }
+                        setFunctions();
+                        initiation.stop();
                     }
                 });
         initiation.getKeyFrames().add(0, kf1);
@@ -96,26 +145,28 @@ public class speelController implements Initializable {
     public void startPlay() {
         if (totalTime != 0) {
             lbl_timeLimit.setText(totalTime.toString());
-            Timeline animation = new Timeline();
             KeyFrame kf2 = new KeyFrame(Duration.seconds(1),
                     (ActionEvent actionEvent) -> {
                         Integer time = Integer.parseInt(lbl_timeLimit.getText());
                         time -= 1;
                         if (time == 0) {
-                            animation.pause();
+                            animation.stop();
                             // switch beurt aanroepen
                             // nieuwe speler mag zijn zet op alle mogelijk vlakken doen
                             time = totalTime;
-                            animation.play();
+                            //animation.play();
                         }
                         lbl_timeLimit.setText(time.toString());
                         // als speler een token heeft neergezet dan ook:
                         // time = 0 zetten?
                         // anders hele riedeltje van binnen de if
                     });
-            animation.getKeyFrames().add(0, kf2);
-            animation.setCycleCount(Animation.INDEFINITE);
-            animation.play();
+            if (animation.getKeyFrames().size() == 0 || animation.getStatus().toString().equals("STOPPED")) {
+                animation = new Timeline();
+                animation.getKeyFrames().add(0, kf2);
+                animation.setCycleCount(Animation.INDEFINITE);
+                animation.play();
+            }
         }
     }
 

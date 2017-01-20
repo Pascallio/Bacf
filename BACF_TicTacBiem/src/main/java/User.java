@@ -1,3 +1,5 @@
+import javafx.scene.control.Label;
+
 /**
  * Created by pascal on 3-1-17.
  */
@@ -8,6 +10,7 @@ public class User {
     private int numOfBombs = 0;
     private int time;
     private String token;
+    private Label bommenLabel;
 
     public User(){
 
@@ -26,8 +29,8 @@ public class User {
 
     }
 
-    public void setBombs(){
-        this.numOfBombs -= 1;
+    public void setBombs(int num){
+        this.numOfBombs = num;
     }
 
     public int getBombs(){

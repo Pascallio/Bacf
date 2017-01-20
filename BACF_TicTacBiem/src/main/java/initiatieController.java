@@ -1,6 +1,8 @@
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -46,41 +49,54 @@ public class initiatieController implements Initializable {
 
     @FXML static Solver solve;
 
-    Text test;
+    static Text  test;
 
     public static void setPaths(String path1, String path2) {
         inPath1 = path1;
         inPath2 = path2;
     }
 
-    public static void testupdate() {
-        //test.setText("please");
+    private void update(Solver.BigCell.Cell veld) {
+        final Label test;
+        if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
+            test = lbl_bommen1;
+        } else {
+            test = lbl_bommen2;
+        }
+
+        Runnable first = () -> {
+            veld.setBomb();
+            lbl_totaalBommen.setText("Totaal bommen: " +
+                    String.valueOf(solve.getPlayers()[0].getBombs() + solve.getPlayers()[1].getBombs()));
+            test.setText("Bommen: " + String.valueOf(solve.getCurrentPlayer().getBombs()));
+            solve.switchPlayer();
+            lbl_naamBeurt.setText("Turn of: " + solve.getCurrentPlayer().toString());
+        };
+
+
+        Task taak = new Task<Void>() {
+            @Override
+            public Void call() {
+                Platform.runLater(first);
+                return null;
+            }
+        };
+        Thread volgorde = new Thread(taak);
+        volgorde.start();
     }
 
-    public void update() {
-        lbl_naam1.setText("huuur");
-        test.setText("dit wel dan?");
-        //speelGridPane = pane;
-        //speelGridPane.getChildren().clear();
-        /*
-        int count = 0;
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++) {
-                speelGridPane.add(pane.getChildren().get(count+1), i, j);
-                count += 1;
+    public void setSolver(Solver solver) {
+        solve = solver;
+        for (int i =0; i< 9; i++){
+            int bigrow = i / 3;
+            int bigColumn = i % 3;
+            for (int j = 0; j < 9; j++){
+                int smallrow = j / 3;
+                int smallColumn = j % 3;
+                Solver.BigCell.Cell sasd = solve.getBigCells(bigrow, bigColumn).getSmallCells(smallrow, smallColumn);
+                sasd.getPane().setOnMouseClicked(e -> update(sasd));
             }
         }
-        */
-        //speelGridPane.setMaxSize(1000, 1000);
-        //speelGridPane.setPrefSize(1000, 1000);
-    }
-
-    public static void setSolver(Solver solver) {
-        solve = solver;
-    }
-
-    public static Solver getSolver() {
-        return solve;
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -95,35 +111,8 @@ public class initiatieController implements Initializable {
         }
         iv_avatar1.setImage(SwingFXUtils.toFXImage(bufferedImage1, null));
         iv_avatar2.setImage(SwingFXUtils.toFXImage(bufferedImage2, null));
-
-        /*
-        Timeline initiation = new Timeline();
-
-        KeyFrame kf1 = new KeyFrame(Duration.seconds(1),
-                (ActionEvent actionEvent) -> {
-
-                    initiation.setOnFinished(e -> setAction());
-
-                });
-        initiation.getKeyFrames().add(0, kf1);
-        initiation.setCycleCount(3);
-        initiation.play();
-        */
     }
 
-    public void setAction() {
-        //geprobeerd om hier een event te geven aan de cells, eigenlijk ook hoe het gebeurt in de Solver klasse..
-
-        System.out.println("next");
-        System.out.println(speelGridPane.getChildren().get(0));
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                for (int k = 0; j < 5; j++){
-                    solve.getBigCells(i, j).getSmallCells(i, j).getChildren().get(k).setOnMouseClicked(e -> update());
-                }
-            }
-        }
-    }
 
 
     public void init(MainController mainController) {
@@ -137,7 +126,7 @@ public class initiatieController implements Initializable {
     public void playKlikken(ActionEvent event) throws IOException {
         System.out.println("Check goedzetten na testen, doorgaan!");
         System.out.println(solve.getBomb_list().size());
-        int bommen = Integer.parseInt(lbl_totaalBommen.getText());
+        int bommen = Integer.parseInt(lbl_totaalBommen.getText().substring(lbl_totaalBommen.getText().length() -1));
         if (bommen < 3) { //                                < 1 of == 0, dit neergezet voor testen!
             speelController.setPaths(inPath1, inPath2);
 
@@ -166,5 +155,4 @@ public class initiatieController implements Initializable {
             // errorlabel tekst zetten!
         }
     }
-
 }
