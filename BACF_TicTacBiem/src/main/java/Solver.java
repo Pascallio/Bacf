@@ -1,4 +1,7 @@
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -7,6 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +33,11 @@ public class Solver {
     private Integer new_pos = 4;
     private ArrayList<int[]> bomb_list = new ArrayList<>();
     private String path = System.getProperty("user.dir") + "/src/main/resources/bomb_play.png";
+    public static Stage stage;
+
+    public static void setStage(Stage root) {
+        stage = root;
+    }
 
     public Solver(User[] players, GridPane pane, String scherm){
         this.players = players;
@@ -83,7 +93,7 @@ public class Solver {
     }
 
     public BigCell getBigCells(int row, int column){
-        return this.totalSolver[row][column];
+        return totalSolver[row][column];
     }
 
     public boolean isFullyFull(){
@@ -186,7 +196,7 @@ public class Solver {
         }
 
         public Cell getSmallCells(int row, int column){
-            return this.cell[row][column];
+            return cell[row][column];
         }
 
         public boolean isFull(){
@@ -333,10 +343,40 @@ public class Solver {
                 return this.token.length() > 0;
             }
 
-            public void setBomb(){
+            public void setBomb() {
                 this.bomb = true;
                 getCurrentPlayer().setBombs();
                 //new initiatiescherm().update(getCurrentPlayer().toString(), getCurrentPlayer().getBombs(), hasTotalBombsLeft());
+
+                //vanalles geprobeert, maar of hij update het scherm niet en geeft ook geen error
+                //of hij initialized het scherm opnieuw met de update maar met een leeg grid
+                /*
+                try {
+                    //Solver solver = initiatieController.getSolver();
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("initiatiescherm.fxml"));
+                    //FXMLLoader loader = new FXMLLoader(getClass().getResource("initiatiescherm.fxml"));
+                    Parent root = loader.load();
+                    initiatieController controller = loader.getController();
+                    //controller.setSolver(solver);
+                    //initiatieController.setSolver(solver);
+
+                    System.out.println("1");
+                    //controller.update();
+                    controller.lbl_totaalBommen.setText("asdasdasdasd");
+                    System.out.println("3");
+                    //controller.test.setText("lol");
+                    System.out.println("2");
+
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                }
+                */
+
+                //initiatieController.testupdate();
+
                 bomb_list.add(new int[]{this.bigPosition, this.position});
                 try {
                     image = SwingFXUtils.toFXImage(ImageIO.read(new File(path)), null);

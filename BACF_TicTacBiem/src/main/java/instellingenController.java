@@ -187,6 +187,9 @@ public class instellingenController implements Initializable {
                         new User("naam2",  "O")}, controller.speelGridPane,
                         "initiatiescherm", levensps, bommenps);
                 controller.setSolver(control);
+                System.out.println(controller.solve);
+                //controller.setAction();
+
                 Scene scene = new Scene(root);
                 controller.lbl_naam1.setText(tf_naamSpeler1.getText());
                 controller.lbl_naam2.setText(tf_naamSpeler2.getText());

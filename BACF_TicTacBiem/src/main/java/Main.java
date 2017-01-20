@@ -15,6 +15,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("beginscherm.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
+        Solver.setStage(primaryStage);
         primaryStage.show();
     }
     public static void main(String[] args) {
