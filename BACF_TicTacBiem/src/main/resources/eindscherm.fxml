@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -30,16 +31,20 @@ Daaronder komen alle elementen die op de pane staan. De elementen met een 'fx:id
 <Button fx:id="replayKnop" layoutX="546.0" layoutY="436.0" mnemonicParsing="false" onAction="#replayKlikken" prefHeight="25.0" prefWidth="96.0" text="Replay" />
       <Separator layoutX="19.0" layoutY="418.0" prefHeight="4.0" prefWidth="659.0" />
       <Separator layoutX="19.0" layoutY="51.0" prefHeight="4.0" prefWidth="659.0" />
-      <Label layoutX="261.0" layoutY="118.0" text="Congratulations">
+      <Label layoutX="183.0" layoutY="83.0" text="Congratulations">
          <font>
-            <Font size="25.0" />
+            <Font size="45.0" />
          </font>
       </Label>
-      <Label layoutX="283.0" layoutY="186.0" text="Naam winner">
+      <Label fx:id="lbl_winner" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="253.0" layoutY="164.0" text="Naam winner">
          <font>
-            <Font size="20.0" />
+            <Font size="30.0" />
          </font>
       </Label>
-      <Label layoutX="293.0" layoutY="250.0" text="has won the game" />
+      <Label layoutX="276.0" layoutY="343.0" text="has won the game">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <ImageView fx:id="iv_winner" fitHeight="100.0" fitWidth="117.0" layoutX="283.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
 </children>
 </Pane>

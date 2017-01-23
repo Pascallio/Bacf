@@ -63,8 +63,8 @@ public class Solver {
         this.players[0].setNumOfLifes(lifes);
         this.players[1].setNumOfLifes(lifes);
 
-        this.players[0].setBombs(lifes);
-        this.players[1].setBombs(lifes);
+        this.players[0].setBombs(bombs);
+        this.players[1].setBombs(bombs);
 
         this.scherm = scherm;
         this.lifes = lifes;
@@ -365,20 +365,23 @@ public class Solver {
             }
 
             public void setBomb() {
-                this.bomb = true;
-                getCurrentPlayer().setBombs(getCurrentPlayer().getBombs() - 1);
-                bomb_list.add(new int[]{this.bigPosition, this.position});
-                try {
-                    image = SwingFXUtils.toFXImage(ImageIO.read(new File(path)), null);
-                    view = new ImageView(image);
-                    view.fitHeightProperty().bind(this.heightProperty());
-                    view.fitWidthProperty().bind(this.widthProperty());
-                    this.getChildren().add(view);
-                } catch (IOException e) {
-                    System.out.println(e.getMessage() + "asdasdsad");
-                } catch (NullPointerException e){
-                    System.out.println(e.getMessage());
-                }
+
+                    this.bomb = true;
+                    getCurrentPlayer().setBombs(getCurrentPlayer().getBombs() - 1);
+                    bomb_list.add(new int[]{this.bigPosition, this.position});
+                    try {
+                        image = SwingFXUtils.toFXImage(ImageIO.read(new File(path)), null);
+                        view = new ImageView(image);
+                        view.fitHeightProperty().bind(this.heightProperty());
+                        view.fitWidthProperty().bind(this.widthProperty());
+                        this.getChildren().add(view);
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage() + "asdasdsad");
+                    } catch (NullPointerException e){
+                        System.out.println(e.getMessage());
+                    }
+
+
             }
 
             public boolean getBomb(){

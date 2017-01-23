@@ -34,10 +34,13 @@ public class instellingenController implements Initializable {
     @FXML private TextField tf_naamSpeler2;
     @FXML private Label errorLabel;
     @FXML private Label timeLabel;
+    @FXML private Label lbl_timeSlider;
+    @FXML private Label lbl_bombsPerPlayer;
+    @FXML private Label lbl_lifesPerPlayer;
+    @FXML private Label lbl_maxPerField;
     @FXML private Slider timeSlider;
     @FXML private ComboBox cb_avatarSpeler1;
     @FXML private ComboBox cb_avatarSpeler2;
-    @FXML private ComboBox cb_startingPlayer;
     @FXML private ComboBox cb_bombs;
     @FXML private ComboBox cb_bombsPerPlayer;
     @FXML private ComboBox cb_lifesPerPlayer;
@@ -48,8 +51,36 @@ public class instellingenController implements Initializable {
         initialize();
     }
     public void initialize() {
-        cb_startingPlayer.getItems().addAll("1", "2");
-        cb_startingPlayer.getSelectionModel().selectFirst();
+        cb_timeLimit.valueProperty().addListener((module, oud, nieuw) -> {
+            if (nieuw == "On") {
+                lbl_timeSlider.setVisible(true);
+                timeSlider.setVisible(true);
+                timeLabel.setVisible(true);
+                cb_bombs.getSelectionModel().selectFirst();
+            } else {
+                lbl_timeSlider.setVisible(false);
+                timeSlider.setVisible(false);
+                timeLabel.setVisible(false);
+            }
+        });
+        cb_bombs.valueProperty().addListener((module, oud, nieuw) -> {
+            if (nieuw == "On") {
+                lbl_bombsPerPlayer.setVisible(true);
+                lbl_lifesPerPlayer.setVisible(true);
+                lbl_maxPerField.setVisible(true);
+                cb_bombsPerPlayer.setVisible(true);
+                cb_lifesPerPlayer.setVisible(true);
+                cb_maxPerField.setVisible(true);
+            } else {
+                lbl_bombsPerPlayer.setVisible(false);
+                lbl_lifesPerPlayer.setVisible(false);
+                lbl_maxPerField.setVisible(false);
+                cb_bombsPerPlayer.setVisible(false);
+                cb_lifesPerPlayer.setVisible(false);
+                cb_maxPerField.setVisible(false);
+                cb_timeLimit.getSelectionModel().selectLast();
+            }
+        });
 
         cb_bombs.getItems().addAll("On", "Off");
         cb_bombs.getSelectionModel().selectFirst();
@@ -139,23 +170,20 @@ public class instellingenController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("beginscherm.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("TicTacBiem");
         stage.show();
     }
     public void nextKlikken (ActionEvent event) throws IOException {
-        System.out.println("CHECKS TOEVOEGEN");
-        System.out.println("ook eigenlijk eerst naar initiatiescherm");
-        System.out.println("bij speelscherm een initialize meegeven met waar de bommen liggen + gelijk plaatsen");
-
-        if (cb_startingPlayer.getSelectionModel().getSelectedItem().equals("1")) {
-            naamBeurt = tf_naamSpeler1.getText();
-        } else {
-            naamBeurt = tf_naamSpeler2.getText();
-        }
+        naamBeurt = tf_naamSpeler1.getText();
 
         if (tf_naamSpeler1.getText().length() < 3) {
             errorLabel.setText("Name of player 1 has to be longer than 2 characters.");
         } else if (tf_naamSpeler2.getText().length() < 3) {
             errorLabel.setText("Name of player 2 has to be longer than 2 characters.");
+        } else if (!tf_naamSpeler1.getText().matches("[a-zA-Z]+")) {
+            errorLabel.setText("Name of player 1 can't contain other characters than letters.");
+        } else if (!tf_naamSpeler2.getText().matches("[a-zA-Z]+")) {
+            errorLabel.setText("Name of player 2 can't contain other characters than letters.");
         } else if (tf_naamSpeler1.getText().equals(tf_naamSpeler2.getText())) {
             errorLabel.setText("Names of both players can't be the same.");
         } else if (cb_avatarSpeler1.getSelectionModel().getSelectedItem() == null) {
@@ -171,6 +199,9 @@ public class instellingenController implements Initializable {
                 errorLabel.setText("The amount of lifes per player has to be chosen.");
             } else if (cb_maxPerField.getSelectionModel().getSelectedItem() == null) {
                 errorLabel.setText("The maximum amount of bombs per field has to be chosen.");
+                Integer bombspp = Integer.parseInt(cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString());
+            } else if (2*Integer.parseInt(cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString()) < Integer.parseInt(cb_lifesPerPlayer.getSelectionModel().getSelectedItem().toString())) {
+                errorLabel.setText("Players can't be beaten by losing lifes now, please increase the amount of bombs or decrease the amount of lifes.");
             } else {
                 initiatieController.setPaths(outPath1, outPath2);
 
@@ -192,10 +223,10 @@ public class instellingenController implements Initializable {
                 controller.lbl_naam2.setText(tf_naamSpeler2.getText());
                 controller.lbl_naamBeurt.setText("Turn of: " + naamBeurt);
                 String bommen = cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString();
-                controller.lbl_bommen1.setText(bommen);
-                controller.lbl_bommen2.setText(bommen);
+                controller.lbl_bommen1.setText("Bommen: " + bommen);
+                controller.lbl_bommen2.setText("Bommen: " + bommen);
                 Integer bombs = Integer.parseInt(bommen)*2;
-                controller.lbl_totaalBommen.setText(bombs.toString());
+                controller.lbl_totaalBommen.setText("Totaal bommen: " + bombs.toString());
 
                 String levens = cb_lifesPerPlayer.getSelectionModel().getSelectedItem().toString();
                 controller.levens1 = levens;
@@ -205,6 +236,7 @@ public class instellingenController implements Initializable {
                     controller.totalTime = Integer.parseInt(timeLabel.getText());
                 }
                 stage.setScene(scene);
+                stage.setTitle("TicTac Bomb initiation");
                 stage.show();
             }
         }
@@ -218,9 +250,10 @@ public class instellingenController implements Initializable {
             speelController controller = loader.getController();
 
             Solver control = new Solver(new User[]{
-                    new User("naam1", "X"),
-                    new User("naam2", "O")}, controller.speelGridPane,
+                    new User(tf_naamSpeler1.getText(), "X"),
+                    new User(tf_naamSpeler2.getText(), "O")}, controller.speelGridPane,
                     "speelscherm");
+            controller.setSolver(control);
 
             controller.lbl_naam1.setText(tf_naamSpeler1.getText());
             controller.lbl_naam2.setText(tf_naamSpeler2.getText());
@@ -232,6 +265,7 @@ public class instellingenController implements Initializable {
             }
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setTitle("TicTacBiem Biem Biem");
             stage.show();
         }
     }

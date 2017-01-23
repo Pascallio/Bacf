@@ -32,6 +32,7 @@ public class beginController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("regelscherm.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Game rules");
         stage.show();
     }
     public void startKlikken (ActionEvent event) throws  IOException {
@@ -40,6 +41,7 @@ public class beginController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("instellingenscherm.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Game options");
         stage.show();
     }
 }

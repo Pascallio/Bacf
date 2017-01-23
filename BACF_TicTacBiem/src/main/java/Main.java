@@ -16,6 +16,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         Solver.setStage(primaryStage);
+        primaryStage.setTitle("TicTacBiem");
         primaryStage.show();
     }
     public static void main(String[] args) {
@@ -23,7 +24,8 @@ public class Main extends Application {
     }
 
     public static void play(){
-        Media sound = new Media(new File("/home/pascal/Bacf/BACF_TicTacBiem/src/main/resources/biem_sound.wav").toURI().toString());
+        String path = System.getProperty("user.dir") + "/src/main/resources/biem_sound.wav";
+        Media sound = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
     }

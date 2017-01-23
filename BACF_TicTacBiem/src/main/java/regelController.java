@@ -19,13 +19,12 @@ public class regelController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
 
-        generalLabel.setText("The starting player begins with taking a turn. \n" +
-        "The first turn has to be done in the middle grid. \n" +
-        "Whenever a token is placed the turn goes to the other player. \n" +
-        "The grid is won for the player that has 3 tokens in a row. \n" +
-        "On a grid completion, the other player may place his token on any available spot. \n" +
-        "When a player is sent to a completed grid, he may place his token on any available spot. \n" +
-        "The game is won for the player that has 3 grids in a row. \n");
+        generalLabel.setText("Player 1 begins with taking a turn. \n" +
+        "The first turn has to be done in the middle big grid. \n" +
+        "Whenever a token is placed, the turn goes to the other player. \n" +
+        "The big grid is won for the player that has 3 tokens in a row. \n" +
+        "When a player is sent to a completed big grid, he has to place his token in the upper-left most field. \n" +
+        "The game is won for the player that has 3 big grids in a row. \n");
 
         bombsLabel.setText("When playing with the bombs option on. \n" +
                 "==================\n" +
@@ -34,11 +33,10 @@ public class regelController implements Initializable {
 
         timeLabel.setText("When playing with the time option on. \n" +
                 "==================\n" +
-        "When a players places his token within the given time, \n" +
-        "The other player will get the same amount of time to play his token. \n" +
+        "When a player places his token within the given time, \n" +
+        "the other player will get the same amount of time to play his token. \n" +
         "When a player lets the timer hit 0, \n" +
-        "The other player will get his timer but is able to place his token " +
-        "on any available spot.");
+        "he will lose a life and has to redo the same turn with the same amount of time.");
     }
     public void init(MainController mainController) {
         main = mainController;
@@ -49,6 +47,7 @@ public class regelController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("beginscherm.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("TicTacBiem");
         stage.show();
     }
     public void startKlikken (ActionEvent event) throws IOException {
@@ -57,6 +56,7 @@ public class regelController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("instellingenscherm.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Game options");
         stage.show();
     }
 }

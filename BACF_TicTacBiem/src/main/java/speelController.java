@@ -6,12 +6,15 @@ import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
@@ -38,11 +41,12 @@ public class speelController implements Initializable {
     @FXML Label lbl_levens1;
     @FXML Label lbl_levens2;
     @FXML Label lbl_timeLimit;
+    @FXML Label lbl_limitTime;
     @FXML Integer totalTime = 0;
 
     @FXML static Solver solve;
     private Timeline animation = new Timeline();
-    private Label test = new Label();
+    private Label lbl_levens = new Label();
 
 
     public static void setPaths (String path1, String path2) {
@@ -52,21 +56,47 @@ public class speelController implements Initializable {
 
     private void update(Solver.BigCell.Cell veld) {
         if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
-            test = lbl_levens1;
+            lbl_levens = lbl_levens1;
         } else {
-            test = lbl_levens2;
+            lbl_levens = lbl_levens2;
         }
 
         Runnable first = () -> {
             if (solve.new_pos == veld.bigPosition) {
-                veld.onMouseClick();
-                test.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
-                solve.switchPlayer();
-                lbl_naamBeurt.setText("Turn of: " + solve.getCurrentPlayer().toString());
+                if (!veld.hasToken()) {
+                    veld.onMouseClick();
+                    if (lbl_levens1.getText() != "") {
+                        lbl_levens.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
+                        if(solve.getCurrentPlayer().getNumOfLifes() == 0) {
+                            try {
+                                Stage stage = (Stage) lbl_levens1.getScene().getWindow();
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("eindscherm.fxml"));
+                                Parent root = loader.load();
+                                eindController controller = loader.getController();
+
+                                if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
+                                    lbl_levens = lbl_naam2;
+                                    controller.iv_winner = iv_avatar2;
+                                } else {
+                                    lbl_levens = lbl_naam1;
+                                    controller.iv_winner = iv_avatar1;
+                                }
+                                controller.lbl_winner.setText(lbl_levens.getText());
+
+                                Scene scene = new Scene(root);
+                                stage.setScene(scene);
+                                stage.setTitle("TicTacBiem celebrations");
+                                stage.show();
+                            } catch (IOException ignored) {
+                            }
+
+                        }
+                    }
+                    solve.switchPlayer();
+                    lbl_naamBeurt.setText("Turn of: " + solve.getCurrentPlayer().toString());
+                }
             }
         };
-
-
         Task taak = new Task<Void>() {
             @Override
             public Void call() {
@@ -77,9 +107,18 @@ public class speelController implements Initializable {
         Thread volgorde = new Thread(taak);
         volgorde.start();
 
-        if (solve.new_pos == veld.bigPosition){
-            startPlay();
+
+
+        if (!veld.hasToken()) {
+            if (solve.new_pos == veld.bigPosition){
+                if (lbl_levens1.getText() != "") {
+
+                    //ZELFDE CHECK MOET OOK BIJ TIMER AF LATEN LOPEN
+                }
+                startPlay();
+            }
         }
+
     }
 
     public void setSolver(Solver solver) {
@@ -95,20 +134,17 @@ public class speelController implements Initializable {
         }
     }
 
-    private void setFunctions(){
+    private void setFunctions() {
         for (int i =0; i< 9; i++){
             int bigRow = i / 3;
             int bigColumn = i % 3;
             for (int j = 0; j < 9; j++) {
                 int smallRow = j / 3;
                 int smallColumn = j % 3;
-                Solver.BigCell.Cell sasd = solve.getBigCells(bigRow, bigColumn).getSmallCells(smallRow, smallColumn);
-                sasd.getPane().setOnMouseClicked(e -> update(sasd));
-
+                Solver.BigCell.Cell SBC = solve.getBigCells(bigRow, bigColumn).getSmallCells(smallRow, smallColumn);
+                SBC.getPane().setOnMouseClicked(e -> update(SBC));
             }
         }
-
-
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -130,11 +166,16 @@ public class speelController implements Initializable {
                     Integer time = Integer.parseInt(lbl_timeLimit.getText());
                     time -= 1;
                     lbl_timeLimit.setText(time.toString());
-
                     if (time == 0) {
-                        setFunctions();
                         initiation.stop();
-                        startPlay();
+                        setFunctions();
+
+                        if (totalTime != 0) {
+                            startPlay();
+                        } else {
+                            lbl_limitTime.setText("");
+                            lbl_timeLimit.setText("");
+                        }
                     }
                 });
         initiation.getKeyFrames().add(0, kf1);
@@ -152,12 +193,35 @@ public class speelController implements Initializable {
                         if (time == 0) {
                             solve.getCurrentPlayer().setNumOfLifes(solve.getCurrentPlayer().getNumOfLifes() - 1);
                             if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
-                                test = lbl_levens1;
+                                lbl_levens = lbl_levens1;
                             } else {
-                                test = lbl_levens2;
+                                lbl_levens = lbl_levens2;
                             }
-                            test.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
+                            lbl_levens.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
                             animation.stop();
+                            if(solve.getCurrentPlayer().getNumOfLifes() == 0) {
+                                try {
+                                    Stage stage = (Stage) lbl_levens1.getScene().getWindow();
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("eindscherm.fxml"));
+                                    Parent root = loader.load();
+                                    eindController controller = loader.getController();
+
+                                    if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
+                                        lbl_levens = lbl_naam2;
+                                        controller.iv_winner = iv_avatar2;
+                                    } else {
+                                        lbl_levens = lbl_naam1;
+                                        controller.iv_winner = iv_avatar1;
+                                    }
+                                    controller.lbl_winner.setText(lbl_levens.getText());
+
+                                    Scene scene = new Scene(root);
+                                    stage.setScene(scene);
+                                    stage.setTitle("TicTacBiem celebrations");
+                                    stage.show();
+                                } catch (IOException ignored) {
+                                }
+                            }
                             // switch beurt aanroepen
                             // nieuwe speler mag zijn zet op alle mogelijk vlakken doen
                             time = totalTime;

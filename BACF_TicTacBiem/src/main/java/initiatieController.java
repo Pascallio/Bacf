@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -41,6 +42,8 @@ public class initiatieController implements Initializable {
     @FXML Label lbl_bommen1;
     @FXML Label lbl_bommen2;
     @FXML Label lbl_totaalBommen;
+    @FXML Label lbl_error;
+
 
     @FXML String levens1;
     @FXML String levens2;
@@ -49,7 +52,7 @@ public class initiatieController implements Initializable {
 
     @FXML static Solver solve;
 
-    static Text  test;
+    static Text test;
 
     public static void setPaths(String path1, String path2) {
         inPath1 = path1;
@@ -63,17 +66,23 @@ public class initiatieController implements Initializable {
         } else {
             test = lbl_bommen2;
         }
-
         Runnable first = () -> {
-            veld.setBomb();
-            lbl_totaalBommen.setText("Totaal bommen: " +
-                    String.valueOf(solve.getPlayers()[0].getBombs() + solve.getPlayers()[1].getBombs()));
-            test.setText("Bommen: " + String.valueOf(solve.getCurrentPlayer().getBombs()));
-            solve.switchPlayer();
-            lbl_naamBeurt.setText("Turn of: " + solve.getCurrentPlayer().toString());
+            if (!veld.hasBomb()) {
+                if (solve.getPlayers()[0].getBombs() + solve.getPlayers()[1].getBombs() > 0) {
+                    veld.setBomb();
+                    lbl_error.setText("");
+                    test.setText("Bommen: " + String.valueOf(solve.getCurrentPlayer().getBombs()));
+                    solve.switchPlayer();
+                    lbl_naamBeurt.setText("Turn of: " + solve.getCurrentPlayer().toString());
+                    lbl_totaalBommen.setText("Totaal bommen: " +
+                            String.valueOf(solve.getPlayers()[0].getBombs() + solve.getPlayers()[1].getBombs()));
+                    if (solve.getPlayers()[0].getBombs() + solve.getPlayers()[1].getBombs() < 1) {
+                        lbl_totaalBommen.setText("No bombs left!");
+                        lbl_naamBeurt.setText("");
+                    }
+                }
+            }
         };
-
-
         Task taak = new Task<Void>() {
             @Override
             public Void call() {
@@ -93,8 +102,8 @@ public class initiatieController implements Initializable {
             for (int j = 0; j < 9; j++){
                 int smallrow = j / 3;
                 int smallColumn = j % 3;
-                Solver.BigCell.Cell sasd = solve.getBigCells(bigrow, bigColumn).getSmallCells(smallrow, smallColumn);
-                sasd.getPane().setOnMouseClicked(e -> update(sasd));
+                Solver.BigCell.Cell SBC = solve.getBigCells(bigrow, bigColumn).getSmallCells(smallrow, smallColumn);
+                SBC.getPane().setOnMouseClicked(e -> update(SBC));
             }
         }
     }
@@ -125,9 +134,8 @@ public class initiatieController implements Initializable {
 
     public void playKlikken(ActionEvent event) throws IOException {
         System.out.println("Check goedzetten na testen, doorgaan!");
-        System.out.println(solve.getBomb_list().size());
-        int bommen = Integer.parseInt(lbl_totaalBommen.getText().substring(lbl_totaalBommen.getText().length() -1));
-        if (bommen < 3) { //                                < 1 of == 0, dit neergezet voor testen!
+        int bommen = solve.getPlayers()[0].getBombs() + solve.getPlayers()[1].getBombs();
+        if (bommen == 0) {
             speelController.setPaths(inPath1, inPath2);
 
             Node node = (Node) event.getSource();
@@ -141,18 +149,19 @@ public class initiatieController implements Initializable {
 
             controller.lbl_naam1.setText(lbl_naam1.getText());
             controller.lbl_naam2.setText(lbl_naam2.getText());
-            controller.lbl_naamBeurt.setText(lbl_naamBeurt.getText());
-            controller.lbl_levens1.setText(levens1);
-            controller.lbl_levens2.setText(levens2);
+            controller.lbl_naamBeurt.setText("Turn of: " + lbl_naam1.getText());
+            controller.lbl_levens1.setText("Aantal levens: " + levens1);
+            controller.lbl_levens2.setText("Aantal levens: " + levens2);
 
             if (totalTime > 9) {
                 controller.totalTime = totalTime;
             }
             stage.setScene(scene);
+            stage.setTitle("TicTacBiem Biem Biem");
             stage.show();
         } else {
-            System.out.println("Check goedzetten na testen, errorlabel!");
-            // errorlabel tekst zetten!
+            lbl_error.setTextFill(Color.RED);
+            lbl_error.setText("Er moet nog een bom worden geplaatst.");
         }
     }
 }

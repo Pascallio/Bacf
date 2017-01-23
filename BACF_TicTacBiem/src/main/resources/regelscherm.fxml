@@ -29,7 +29,6 @@ Daaronder komen alle elementen die op de pane staan. De elementen met een 'fx:id
 <Button fx:id="backKnop" layoutX="42.0" layoutY="436.0" mnemonicParsing="false" onAction="#backKlikken" prefHeight="25.0" prefWidth="96.0" text="Back" />
 <Button fx:id="startKnop" layoutX="546.0" layoutY="436.0" mnemonicParsing="false" onAction="#startKlikken" prefHeight="25.0" prefWidth="96.0" text="Start" />
       <Separator layoutX="19.0" layoutY="418.0" prefHeight="4.0" prefWidth="659.0" />
-      <Separator layoutX="19.0" layoutY="51.0" prefHeight="4.0" prefWidth="659.0" />
       <Label fx:id="generalLabel" alignment="TOP_LEFT" layoutX="42.0" layoutY="101.0" prefHeight="304.0" prefWidth="178.0" text="REGELS etc label" wrapText="true">
          <font>
             <Font size="12.5" />

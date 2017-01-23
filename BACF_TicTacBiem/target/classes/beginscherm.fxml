@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -17,7 +18,6 @@
 <Button fx:id="startKnop" layoutX="546.0" layoutY="436.0" mnemonicParsing="false" onAction="#startKlikken" prefHeight="25.0" prefWidth="96.0" text="Start" />
 <Button fx:id="regelsKnop" layoutX="277.0" layoutY="436.0" mnemonicParsing="false" onAction="#rulesKlikken" prefHeight="25.0" prefWidth="143.0" text="Rules" />
       <Separator layoutX="19.0" layoutY="418.0" prefHeight="4.0" prefWidth="659.0" />
-      <Separator layoutX="19.0" layoutY="51.0" prefHeight="4.0" prefWidth="659.0" />
       <Label layoutX="200.0" layoutY="80.0" text="Welcome to Ultimate TicTacBiem!">
          <font>
             <Font size="20.0" />
@@ -28,5 +28,6 @@
             <Font size="16.0" />
          </font>
       </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="14.0" opacity="0.2" stroke="BLACK" strokeLineJoin="ROUND" strokeType="OUTSIDE" width="200.0" />
 </children>
 </Pane>
