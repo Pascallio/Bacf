@@ -253,16 +253,16 @@ public class instellingenController implements Initializable {
                     new User(tf_naamSpeler1.getText(), "X"),
                     new User(tf_naamSpeler2.getText(), "O")}, controller.speelGridPane,
                     "speelscherm");
-            controller.setSolver(control);
+            controller.setSolver(control, true);
 
             controller.lbl_naam1.setText(tf_naamSpeler1.getText());
             controller.lbl_naam2.setText(tf_naamSpeler2.getText());
             controller.lbl_naamBeurt.setText("Turn of: " + naamBeurt);
             controller.lbl_levens1.setText("");
             controller.lbl_levens2.setText("");
-            if (cb_timeLimit.getSelectionModel().getSelectedItem().equals("On")) {
-                controller.totalTime = Integer.parseInt(timeLabel.getText());
-            }
+            //if (cb_timeLimit.getSelectionModel().getSelectedItem().equals("On")) {
+            //    controller.totalTime = Integer.parseInt(timeLabel.getText());
+            //}
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("TicTacBiem Biem Biem");

@@ -134,6 +134,11 @@ public class speelController implements Initializable {
         }
     }
 
+    public void setSolver(Solver solver, boolean test) {
+        solve = solver;
+    }
+    
+
     private void setFunctions() {
         for (int i =0; i< 9; i++){
             int bigRow = i / 3;
