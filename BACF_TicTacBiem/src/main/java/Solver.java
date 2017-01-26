@@ -273,6 +273,7 @@ public class Solver {
                 this.bigPosition = groot;
                 setPrefSize(Integer.MAX_VALUE,Integer.MAX_VALUE);
                 setStyle("-fx-border-color: black");
+<<<<<<< Updated upstream
             }
 
             public Pane getPane(){
@@ -297,6 +298,28 @@ public class Solver {
 =======
                     //System.out.println("Already has a bomb!");
 >>>>>>> Stashed changes
+=======
+            }
+
+            public Pane getPane(){
+                return this;
+            }
+
+            public void onMouseClick(){
+                if (scherm.equals("speelscherm")) {
+                    this.speelscherm();
+                } else {
+                    initiatiescherm();
+                }
+            }
+
+            private void initiatiescherm(){
+                if (!hasBomb() && bombs > 0){
+                    setBomb();
+                    switchPlayer();
+                } else {
+                    //System.out.println("Already has a bomb!");
+>>>>>>> Stashed changes
                 }
             }
 
@@ -305,7 +328,10 @@ public class Solver {
                 if (!hasToken()) {  //heeft geen token?
                     if (new_pos == this.bigPosition) { //is in het juiste vakje?
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                         System.out.println(bigPosition + " " + position);
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
                         setToken(getCurrentPlayer().getToken());
@@ -314,7 +340,11 @@ public class Solver {
                     }
                 } else {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     System.out.println("Already has a token!");
+=======
+                    //System.out.println("Already has a token!");
+>>>>>>> Stashed changes
 =======
                     //System.out.println("Already has a token!");
 >>>>>>> Stashed changes
@@ -324,6 +354,10 @@ public class Solver {
             private void checkBombs(User player){
                 if (hasBomb()) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -391,6 +425,7 @@ public class Solver {
                         view.fitWidthProperty().bind(this.widthProperty());
                         this.getChildren().add(view);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     } catch (IOException e) {
                         System.out.println(e.getMessage() + "asdasdsad");
                     } catch (NullPointerException e){
@@ -398,6 +433,11 @@ public class Solver {
                     }
 
 
+=======
+                    } catch (IOException ignored) {}
+                    catch (NullPointerException ignored){
+                    }
+>>>>>>> Stashed changes
 =======
                     } catch (IOException ignored) {}
                     catch (NullPointerException ignored){

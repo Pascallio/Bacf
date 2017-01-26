@@ -50,7 +50,10 @@ public class speelController implements Initializable {
     private Label lbl_levens = new Label();
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     public static void setPaths (String path1, String path2) {
@@ -69,6 +72,7 @@ public class speelController implements Initializable {
             if (solve.new_pos == veld.bigPosition) {
                 if (!veld.hasToken()) {
                     veld.onMouseClick();
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                     if (lbl_levens1.getText() != "") {
                         lbl_levens.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
@@ -98,6 +102,8 @@ public class speelController implements Initializable {
                         }
                     }
 =======
+=======
+>>>>>>> Stashed changes
                     if (!lbl_levens1.getText().equals("")) {
                         lbl_levens.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
                         try {
@@ -115,6 +121,9 @@ public class speelController implements Initializable {
                         }
                     } catch (IOException ignored) {}
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                     solve.switchPlayer();
                     lbl_naamBeurt.setText("Turn of: " + solve.getCurrentPlayer().toString());
@@ -132,6 +141,7 @@ public class speelController implements Initializable {
         volgorde.start();
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
         if (!veld.hasToken()) {
@@ -144,10 +154,16 @@ public class speelController implements Initializable {
             if (solve.new_pos == veld.bigPosition){
                 if (lbl_levens1.getText() != "") {
 >>>>>>> Stashed changes
+=======
+        if (!veld.hasToken()) {
+            if (solve.new_pos == veld.bigPosition){
+                if (lbl_levens1.getText() != "") {
+>>>>>>> Stashed changes
                 }
                 startPlay();
             }
         }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
     }
@@ -168,6 +184,8 @@ public class speelController implements Initializable {
     public void setSolver(Solver solver, boolean test) {
         solve = solver;
 =======
+=======
+>>>>>>> Stashed changes
     }
 
     private void setWinconditie(String check) throws IOException {
@@ -256,6 +274,7 @@ public class speelController implements Initializable {
                 SBC.getPane().setOnMouseClicked(e -> update(SBC));
             }
         }
+<<<<<<< Updated upstream
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -308,6 +327,8 @@ public class speelController implements Initializable {
                 SBC.getPane().setOnMouseClicked(e -> update(SBC));
             }
         }
+=======
+>>>>>>> Stashed changes
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -323,6 +344,10 @@ public class speelController implements Initializable {
         iv_avatar2.setImage(SwingFXUtils.toFXImage(bufferedImage2, null));
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+        lbl_limitTime.setText("Tijd tot starten spel:");
+>>>>>>> Stashed changes
         lbl_timeLimit.setText("5");
         Timeline initiation = new Timeline();
         KeyFrame kf1 = new KeyFrame(Duration.seconds(1),
@@ -348,9 +373,15 @@ public class speelController implements Initializable {
     }
 
     public void startPlay() {
+<<<<<<< Updated upstream
         if (totalTime != 0) {
 =======
     public void startPlay() {
+
+        if (totalTime != 0) {
+            lbl_limitTime.setText("Tijdslimiet:");
+>>>>>>> Stashed changes
+=======
 
         if (totalTime != 0) {
             lbl_limitTime.setText("Tijdslimiet:");
@@ -369,6 +400,7 @@ public class speelController implements Initializable {
                             }
                             lbl_levens.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
                             animation.stop();
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                             if(solve.getCurrentPlayer().getNumOfLifes() == 0) {
                                 try {
@@ -395,6 +427,11 @@ public class speelController implements Initializable {
                                 try {
                                     setWinconditie("levens");
 >>>>>>> Stashed changes
+=======
+                            if(solve.getCurrentPlayer().getNumOfLifes() < 1) {
+                                try {
+                                    setWinconditie("levens");
+>>>>>>> Stashed changes
                                 } catch (IOException ignored) {
                                 }
                             }
@@ -414,6 +451,10 @@ public class speelController implements Initializable {
                 animation.setCycleCount(Animation.INDEFINITE);
                 animation.play();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
