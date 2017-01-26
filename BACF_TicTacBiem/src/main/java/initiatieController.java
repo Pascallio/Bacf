@@ -51,6 +51,7 @@ public class initiatieController implements Initializable {
     @FXML int totalTime;
 
     @FXML static Solver solve;
+    static Integer bombPerField;
 
     static Text test;
 
@@ -66,8 +67,20 @@ public class initiatieController implements Initializable {
         } else {
             test = lbl_bommen2;
         }
+
         Runnable first = () -> {
-            if (!veld.hasBomb()) {
+            int bombcount = 0;
+            int smallrow = veld.bigPosition / 3;
+            int smallColumn = veld.bigPosition % 3;
+            for (Solver.BigCell.Cell cell[] : solve.getBigCells(smallrow, smallColumn).cell){
+                for (Solver.BigCell.Cell single: cell){
+                    if (single.hasBomb()){
+                        bombcount += 1;
+                    }
+                }
+            }
+            System.out.println(veld.bigPosition);
+            if (!veld.hasBomb() && bombcount < bombPerField) {
                 if (solve.getPlayers()[0].getBombs() + solve.getPlayers()[1].getBombs() > 0) {
                     veld.setBomb();
                     lbl_error.setText("");

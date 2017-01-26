@@ -171,7 +171,7 @@ public class Solver {
 
     public class BigCell extends GridPane {
 
-        private Cell[][] cell = new Cell[3][3];
+        public Cell[][] cell = new Cell[3][3];
 
         public BigCell(int counting){
             int count = 0;

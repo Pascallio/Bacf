@@ -247,6 +247,10 @@ public class instellingenController implements Initializable {
                 if (cb_timeLimit.getSelectionModel().getSelectedItem().equals("On")) {
                     controller.totalTime = Integer.parseInt(timeLabel.getText());
                 }
+
+                if (Integer.parseInt(cb_maxPerField.getSelectionModel().getSelectedItem().toString()) > 0){
+                    initiatieController.bombPerField = Integer.parseInt(cb_maxPerField.getSelectionModel().getSelectedItem().toString());
+                }
                 stage.setScene(scene);
                 stage.setTitle("TicTac Bomb initiation");
                 stage.show();
