@@ -292,7 +292,11 @@ public class Solver {
                     setBomb();
                     switchPlayer();
                 } else {
+<<<<<<< Updated upstream
                     System.out.println("Already has a bomb!");
+=======
+                    //System.out.println("Already has a bomb!");
+>>>>>>> Stashed changes
                 }
             }
 
@@ -300,18 +304,29 @@ public class Solver {
                 //if (!isWon("X") && !isWon("O")){
                 if (!hasToken()) {  //heeft geen token?
                     if (new_pos == this.bigPosition) { //is in het juiste vakje?
+<<<<<<< Updated upstream
                         System.out.println(bigPosition + " " + position);
+=======
+>>>>>>> Stashed changes
                         setToken(getCurrentPlayer().getToken());
                         checkBombs(getCurrentPlayer());
                         setCorrectBorder();
                     }
                 } else {
+<<<<<<< Updated upstream
                     System.out.println("Already has a token!");
+=======
+                    //System.out.println("Already has a token!");
+>>>>>>> Stashed changes
                 }
             }
 
             private void checkBombs(User player){
                 if (hasBomb()) {
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
                     Main.play();
                     view.setImage(null);
                     player.setNumOfLifes(player.getNumOfLifes() - 1);
@@ -375,6 +390,7 @@ public class Solver {
                         view.fitHeightProperty().bind(this.heightProperty());
                         view.fitWidthProperty().bind(this.widthProperty());
                         this.getChildren().add(view);
+<<<<<<< Updated upstream
                     } catch (IOException e) {
                         System.out.println(e.getMessage() + "asdasdsad");
                     } catch (NullPointerException e){
@@ -382,6 +398,11 @@ public class Solver {
                     }
 
 
+=======
+                    } catch (IOException ignored) {}
+                    catch (NullPointerException ignored){
+                    }
+>>>>>>> Stashed changes
             }
 
             public boolean getBomb(){

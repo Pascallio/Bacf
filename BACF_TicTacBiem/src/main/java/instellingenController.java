@@ -38,6 +38,10 @@ public class instellingenController implements Initializable {
     @FXML private Label lbl_bombsPerPlayer;
     @FXML private Label lbl_lifesPerPlayer;
     @FXML private Label lbl_maxPerField;
+<<<<<<< Updated upstream
+=======
+    @FXML private Label lbl_sound;
+>>>>>>> Stashed changes
     @FXML private Slider timeSlider;
     @FXML private ComboBox cb_avatarSpeler1;
     @FXML private ComboBox cb_avatarSpeler2;
@@ -46,6 +50,10 @@ public class instellingenController implements Initializable {
     @FXML private ComboBox cb_lifesPerPlayer;
     @FXML private ComboBox cb_maxPerField;
     @FXML private ComboBox cb_timeLimit;
+<<<<<<< Updated upstream
+=======
+    @FXML private ComboBox cb_sound;
+>>>>>>> Stashed changes
 
     public void initialize(URL location, ResourceBundle resources) {
         initialize();
@@ -68,20 +76,38 @@ public class instellingenController implements Initializable {
                 lbl_bombsPerPlayer.setVisible(true);
                 lbl_lifesPerPlayer.setVisible(true);
                 lbl_maxPerField.setVisible(true);
+<<<<<<< Updated upstream
                 cb_bombsPerPlayer.setVisible(true);
                 cb_lifesPerPlayer.setVisible(true);
                 cb_maxPerField.setVisible(true);
+=======
+                lbl_sound.setVisible(true);
+                cb_bombsPerPlayer.setVisible(true);
+                cb_lifesPerPlayer.setVisible(true);
+                cb_maxPerField.setVisible(true);
+                cb_sound.setVisible(true);
+>>>>>>> Stashed changes
             } else {
                 lbl_bombsPerPlayer.setVisible(false);
                 lbl_lifesPerPlayer.setVisible(false);
                 lbl_maxPerField.setVisible(false);
+<<<<<<< Updated upstream
                 cb_bombsPerPlayer.setVisible(false);
                 cb_lifesPerPlayer.setVisible(false);
                 cb_maxPerField.setVisible(false);
+=======
+                lbl_sound.setVisible(false);
+                cb_bombsPerPlayer.setVisible(false);
+                cb_lifesPerPlayer.setVisible(false);
+                cb_maxPerField.setVisible(false);
+                cb_sound.setVisible(false);
+>>>>>>> Stashed changes
                 cb_timeLimit.getSelectionModel().selectLast();
             }
         });
 
+        cb_sound.getItems().addAll("On", "Off");
+        cb_sound.getSelectionModel().selectFirst();
         cb_bombs.getItems().addAll("On", "Off");
         cb_bombs.getSelectionModel().selectFirst();
         cb_bombsPerPlayer.getItems().addAll(1, 2, 3, 4);
@@ -204,6 +230,7 @@ public class instellingenController implements Initializable {
                 errorLabel.setText("Players can't be beaten by losing lifes now, please increase the amount of bombs or decrease the amount of lifes.");
             } else {
                 initiatieController.setPaths(outPath1, outPath2);
+<<<<<<< Updated upstream
 
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
@@ -243,6 +270,51 @@ public class instellingenController implements Initializable {
         else {
             speelController.setPaths(outPath1, outPath2);
 
+=======
+                if (cb_sound.getSelectionModel().getSelectedItem() == "On") {
+                    Main.setSound();
+                }
+
+
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("initiatiescherm.fxml"));
+                Parent root = loader.load();
+                initiatieController controller = loader.getController();
+
+                int levensps = Integer.parseInt(cb_lifesPerPlayer.getSelectionModel().getSelectedItem().toString());
+                int bommenps = Integer.parseInt(cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString());
+                Solver control = new Solver(new User[]{
+                        new User(tf_naamSpeler1.getText(), "X"),
+                        new User(tf_naamSpeler2.getText(),  "O")}, controller.speelGridPane,
+                        "initiatiescherm", levensps, bommenps);
+                controller.setSolver(control);
+                Scene scene = new Scene(root);
+                controller.lbl_naam1.setText(tf_naamSpeler1.getText());
+                controller.lbl_naam2.setText(tf_naamSpeler2.getText());
+                controller.lbl_naamBeurt.setText("Turn of: " + naamBeurt);
+                String bommen = cb_bombsPerPlayer.getSelectionModel().getSelectedItem().toString();
+                controller.lbl_bommen1.setText("Bommen: " + bommen);
+                controller.lbl_bommen2.setText("Bommen: " + bommen);
+                Integer bombs = Integer.parseInt(bommen)*2;
+                controller.lbl_totaalBommen.setText("Totaal bommen: " + bombs.toString());
+
+                String levens = cb_lifesPerPlayer.getSelectionModel().getSelectedItem().toString();
+                controller.levens1 = levens;
+                controller.levens2 = levens;
+
+                if (cb_timeLimit.getSelectionModel().getSelectedItem().equals("On")) {
+                    controller.totalTime = Integer.parseInt(timeLabel.getText());
+                }
+                stage.setScene(scene);
+                stage.setTitle("TicTac Bomb initiation");
+                stage.show();
+            }
+        }
+        else {
+            speelController.setPaths(outPath1, outPath2);
+
+>>>>>>> Stashed changes
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("speelscherm.fxml"));

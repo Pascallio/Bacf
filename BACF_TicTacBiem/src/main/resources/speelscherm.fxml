@@ -52,13 +52,21 @@ Daaronder komen alle elementen die op de pane staan. De elementen met een 'fx:id
          <font>
             <Font name="System Bold" size="17.0" />
          </font></Label>
+<<<<<<< Updated upstream
       <Label fx:id="lbl_timeLimit" layoutX="377.0" layoutY="62.0" text="tijd">
+=======
+      <Label fx:id="lbl_timeLimit" layoutX="413.0" layoutY="60.0" text="tijd">
+>>>>>>> Stashed changes
          <font>
             <Font size="15.0" />
          </font></Label>
       <ImageView fx:id="iv_avatar1" fitHeight="95.0" fitWidth="113.0" layoutX="43.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="iv_avatar2" fitHeight="95.0" fitWidth="113.0" layoutX="43.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
+<<<<<<< Updated upstream
       <Label fx:id="lbl_limitTime" layoutX="297.0" layoutY="62.0" text="Tijdslimiet:">
+=======
+      <Label fx:id="lbl_limitTime" layoutX="274.0" layoutY="60.0" text="Tijd tot starten spel:">
+>>>>>>> Stashed changes
          <font>
             <Font size="15.0" />
          </font>

@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class Main extends Application {
+    private static String sound = "Off";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -24,9 +25,22 @@ public class Main extends Application {
     }
 
     public static void play(){
+<<<<<<< Updated upstream
         String path = System.getProperty("user.dir") + "/src/main/resources/biem_sound.wav";
         Media sound = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
+=======
+        if (sound == "On") {
+            String path = System.getProperty("user.dir") + "/src/main/resources/biem_sound.wav";
+            Media sound = new Media(new File(path).toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+        }
+    }
+
+    public static void setSound () {
+        sound = "On";
+>>>>>>> Stashed changes
     }
 }
