@@ -20,21 +20,11 @@ import java.util.ResourceBundle;
 public class eindController implements Initializable {
     public MainController main;
     @FXML public Label lbl_winner;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    @FXML public ImageView iv_winner;
-=======
-=======
->>>>>>> Stashed changes
     @FXML public Label lbl_gratz;
     @FXML public Label lbl_won;
     @FXML public ImageView iv_winner;
     @FXML static String inPath;
     @FXML BufferedImage bufferedImage;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
     public void initialize(URL location, ResourceBundle resources) {
         try {

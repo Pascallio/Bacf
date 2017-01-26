@@ -109,13 +109,6 @@ public class initiatieController implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        System.out.println(solve);
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         try {
             bufferedImage1 = ImageIO.read(new File(inPath1));
             bufferedImage2 = ImageIO.read(new File(inPath2));
@@ -139,13 +132,6 @@ public class initiatieController implements Initializable {
     }
 
     public void playKlikken(ActionEvent event) throws IOException {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        System.out.println("Check goedzetten na testen, doorgaan!");
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         int bommen = solve.getPlayers()[0].getBombs() + solve.getPlayers()[1].getBombs();
         if (bommen == 0) {
             speelController.setPaths(inPath1, inPath2);

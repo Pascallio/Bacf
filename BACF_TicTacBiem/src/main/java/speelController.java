@@ -49,13 +49,6 @@ public class speelController implements Initializable {
     private Timeline animation = new Timeline();
     private Label lbl_levens = new Label();
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     public static void setPaths (String path1, String path2) {
         inPath1 = path1;
         inPath2 = path2;
@@ -72,38 +65,6 @@ public class speelController implements Initializable {
             if (solve.new_pos == veld.bigPosition) {
                 if (!veld.hasToken()) {
                     veld.onMouseClick();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    if (lbl_levens1.getText() != "") {
-                        lbl_levens.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
-                        if(solve.getCurrentPlayer().getNumOfLifes() == 0) {
-                            try {
-                                Stage stage = (Stage) lbl_levens1.getScene().getWindow();
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("eindscherm.fxml"));
-                                Parent root = loader.load();
-                                eindController controller = loader.getController();
-
-                                if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
-                                    lbl_levens = lbl_naam2;
-                                    controller.iv_winner = iv_avatar2;
-                                } else {
-                                    lbl_levens = lbl_naam1;
-                                    controller.iv_winner = iv_avatar1;
-                                }
-                                controller.lbl_winner.setText(lbl_levens.getText());
-
-                                Scene scene = new Scene(root);
-                                stage.setScene(scene);
-                                stage.setTitle("TicTacBiem celebrations");
-                                stage.show();
-                            } catch (IOException ignored) {
-                            }
-
-                        }
-                    }
-=======
-=======
->>>>>>> Stashed changes
                     if (!lbl_levens1.getText().equals("")) {
                         lbl_levens.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
                         try {
@@ -121,10 +82,6 @@ public class speelController implements Initializable {
                         }
                     } catch (IOException ignored) {}
 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                     solve.switchPlayer();
                     lbl_naamBeurt.setText("Turn of: " + solve.getCurrentPlayer().toString());
                 }
@@ -140,52 +97,13 @@ public class speelController implements Initializable {
         Thread volgorde = new Thread(taak);
         volgorde.start();
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-
         if (!veld.hasToken()) {
             if (solve.new_pos == veld.bigPosition){
                 if (lbl_levens1.getText() != "") {
-
-                    //ZELFDE CHECK MOET OOK BIJ TIMER AF LATEN LOPEN
-=======
-        if (!veld.hasToken()) {
-            if (solve.new_pos == veld.bigPosition){
-                if (lbl_levens1.getText() != "") {
->>>>>>> Stashed changes
-=======
-        if (!veld.hasToken()) {
-            if (solve.new_pos == veld.bigPosition){
-                if (lbl_levens1.getText() != "") {
->>>>>>> Stashed changes
                 }
                 startPlay();
             }
         }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-    }
-
-    public void setSolver(Solver solver) {
-        User[] users = solver.players;
-        solve = new Solver(users, speelGridPane, "speelscherm");
-        ArrayList<int[]> bommen = solver.getBomb_list();
-        for (int[] coordinaten : bommen) {
-            int bigColumn = coordinaten[0] % 3;
-            int bigRow = coordinaten[0] / 3;
-            int smallColumn = coordinaten[1] % 3;
-            int smallRow = coordinaten[1] / 3;
-            solve.getBigCells(bigRow, bigColumn).getSmallCells(smallRow, smallColumn).setBomb();
-        }
-    }
-
-    public void setSolver(Solver solver, boolean test) {
-        solve = solver;
-=======
-=======
->>>>>>> Stashed changes
     }
 
     private void setWinconditie(String check) throws IOException {
@@ -274,7 +192,6 @@ public class speelController implements Initializable {
                 SBC.getPane().setOnMouseClicked(e -> update(SBC));
             }
         }
-<<<<<<< Updated upstream
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -312,80 +229,13 @@ public class speelController implements Initializable {
         initiation.getKeyFrames().add(0, kf1);
         initiation.setCycleCount(Animation.INDEFINITE);
         initiation.play();
->>>>>>> Stashed changes
     }
     
 
-    private void setFunctions() {
-        for (int i =0; i< 9; i++){
-            int bigRow = i / 3;
-            int bigColumn = i % 3;
-            for (int j = 0; j < 9; j++) {
-                int smallRow = j / 3;
-                int smallColumn = j % 3;
-                Solver.BigCell.Cell SBC = solve.getBigCells(bigRow, bigColumn).getSmallCells(smallRow, smallColumn);
-                SBC.getPane().setOnMouseClicked(e -> update(SBC));
-            }
-        }
-=======
->>>>>>> Stashed changes
-    }
-
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-            bufferedImage1 = ImageIO.read(new File(inPath1));
-            bufferedImage2 = ImageIO.read(new File(inPath2));
-        } catch (IOException e) {
-            e.printStackTrace();
-            bufferedImage1 = null;
-            bufferedImage2 = null;
-        }
-        iv_avatar1.setImage(SwingFXUtils.toFXImage(bufferedImage1, null));
-        iv_avatar2.setImage(SwingFXUtils.toFXImage(bufferedImage2, null));
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-        lbl_limitTime.setText("Tijd tot starten spel:");
->>>>>>> Stashed changes
-        lbl_timeLimit.setText("5");
-        Timeline initiation = new Timeline();
-        KeyFrame kf1 = new KeyFrame(Duration.seconds(1),
-                (ActionEvent actionEvent) -> {
-                    Integer time = Integer.parseInt(lbl_timeLimit.getText());
-                    time -= 1;
-                    lbl_timeLimit.setText(time.toString());
-                    if (time == 0) {
-                        initiation.stop();
-                        setFunctions();
-
-                        if (totalTime != 0) {
-                            startPlay();
-                        } else {
-                            lbl_limitTime.setText("");
-                            lbl_timeLimit.setText("");
-                        }
-                    }
-                });
-        initiation.getKeyFrames().add(0, kf1);
-        initiation.setCycleCount(Animation.INDEFINITE);
-        initiation.play();
-    }
-
-    public void startPlay() {
-<<<<<<< Updated upstream
-        if (totalTime != 0) {
-=======
     public void startPlay() {
 
         if (totalTime != 0) {
             lbl_limitTime.setText("Tijdslimiet:");
->>>>>>> Stashed changes
-=======
-
-        if (totalTime != 0) {
-            lbl_limitTime.setText("Tijdslimiet:");
->>>>>>> Stashed changes
             lbl_timeLimit.setText(totalTime.toString());
             KeyFrame kf2 = new KeyFrame(Duration.seconds(1),
                     (ActionEvent actionEvent) -> {
@@ -400,38 +250,9 @@ public class speelController implements Initializable {
                             }
                             lbl_levens.setText("Aantal levens: " + String.valueOf(solve.getCurrentPlayer().getNumOfLifes()));
                             animation.stop();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            if(solve.getCurrentPlayer().getNumOfLifes() == 0) {
-                                try {
-                                    Stage stage = (Stage) lbl_levens1.getScene().getWindow();
-                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("eindscherm.fxml"));
-                                    Parent root = loader.load();
-                                    eindController controller = loader.getController();
-
-                                    if (solve.getCurrentPlayer().toString().equals(solve.getPlayers()[0].toString())){
-                                        lbl_levens = lbl_naam2;
-                                        controller.iv_winner = iv_avatar2;
-                                    } else {
-                                        lbl_levens = lbl_naam1;
-                                        controller.iv_winner = iv_avatar1;
-                                    }
-                                    controller.lbl_winner.setText(lbl_levens.getText());
-
-                                    Scene scene = new Scene(root);
-                                    stage.setScene(scene);
-                                    stage.setTitle("TicTacBiem celebrations");
-                                    stage.show();
-=======
                             if(solve.getCurrentPlayer().getNumOfLifes() < 1) {
                                 try {
                                     setWinconditie("levens");
->>>>>>> Stashed changes
-=======
-                            if(solve.getCurrentPlayer().getNumOfLifes() < 1) {
-                                try {
-                                    setWinconditie("levens");
->>>>>>> Stashed changes
                                 } catch (IOException ignored) {
                                 }
                             }
@@ -450,14 +271,7 @@ public class speelController implements Initializable {
                 animation.getKeyFrames().add(0, kf2);
                 animation.setCycleCount(Animation.INDEFINITE);
                 animation.play();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
-=======
-
->>>>>>> Stashed changes
             }
         }
     }

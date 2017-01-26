@@ -25,15 +25,6 @@ public class Main extends Application {
     }
 
     public static void play(){
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        String path = System.getProperty("user.dir") + "/src/main/resources/biem_sound.wav";
-        Media sound = new Media(new File(path).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
-=======
-=======
->>>>>>> Stashed changes
         if (sound == "On") {
             String path = System.getProperty("user.dir") + "/src/main/resources/biem_sound.wav";
             Media sound = new Media(new File(path).toURI().toString());
@@ -44,9 +35,5 @@ public class Main extends Application {
 
     public static void setSound () {
         sound = "On";
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     }
 }

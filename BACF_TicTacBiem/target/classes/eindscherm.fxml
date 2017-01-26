@@ -30,51 +30,20 @@ Daaronder komen alle elementen die op de pane staan. De elementen met een 'fx:id
 <Button fx:id="quitKnop" layoutX="42.0" layoutY="436.0" mnemonicParsing="false" onAction="#quitKlikken" prefHeight="25.0" prefWidth="96.0" text="Quit" />
 <Button fx:id="replayKnop" layoutX="546.0" layoutY="436.0" mnemonicParsing="false" onAction="#replayKlikken" prefHeight="25.0" prefWidth="96.0" text="Replay" />
       <Separator layoutX="19.0" layoutY="418.0" prefHeight="4.0" prefWidth="659.0" />
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      <Separator layoutX="19.0" layoutY="51.0" prefHeight="4.0" prefWidth="659.0" />
-      <Label layoutX="183.0" layoutY="83.0" text="Congratulations">
-=======
       <Label fx:id="lbl_gratz" alignment="CENTER" contentDisplay="CENTER" layoutX="103.0" layoutY="79.0" prefHeight="66.0" prefWidth="492.0" text="Congratulations">
->>>>>>> Stashed changes
-=======
-      <Label fx:id="lbl_gratz" alignment="CENTER" contentDisplay="CENTER" layoutX="103.0" layoutY="79.0" prefHeight="66.0" prefWidth="492.0" text="Congratulations">
->>>>>>> Stashed changes
          <font>
             <Font size="45.0" />
          </font>
       </Label>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      <Label fx:id="lbl_winner" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="253.0" layoutY="164.0" text="Naam winner">
-=======
       <Label fx:id="lbl_winner" alignment="CENTER" contentDisplay="CENTER" layoutX="138.0" layoutY="155.0" prefHeight="45.0" prefWidth="401.0" text="Naam winner">
->>>>>>> Stashed changes
-=======
-      <Label fx:id="lbl_winner" alignment="CENTER" contentDisplay="CENTER" layoutX="138.0" layoutY="155.0" prefHeight="45.0" prefWidth="401.0" text="Naam winner">
->>>>>>> Stashed changes
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      <Label layoutX="276.0" layoutY="343.0" text="has won the game">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <ImageView fx:id="iv_winner" fitHeight="100.0" fitWidth="117.0" layoutX="283.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
-=======
-=======
->>>>>>> Stashed changes
       <Label fx:id="lbl_won" alignment="CENTER" contentDisplay="CENTER" layoutX="203.0" layoutY="347.0" prefHeight="25.0" prefWidth="294.0" text="has won the game">
          <font>
             <Font size="16.0" />
          </font></Label>
       <ImageView fx:id="iv_winner" fitHeight="100.0" fitWidth="117.0" layoutX="290.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" />
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 </children>
 </Pane>
