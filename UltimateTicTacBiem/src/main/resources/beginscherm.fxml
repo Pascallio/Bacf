@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beginController">
+
+<children>
+<Label layoutX="253.0" layoutY="14.0" style="-fx-font-weight: BOLD;" text="Ultimate TicTacBiem">
+<font>
+<Font size="20.0" />
+</font>
+</Label>
+<Button fx:id="afsluitenKnop" layoutX="42.0" layoutY="436.0" mnemonicParsing="false" onAction="#quitKlikken" prefHeight="25.0" prefWidth="96.0" text="Quit" />
+<Button fx:id="startKnop" layoutX="546.0" layoutY="436.0" mnemonicParsing="false" onAction="#startKlikken" prefHeight="25.0" prefWidth="96.0" text="Start" />
+<Button fx:id="regelsKnop" layoutX="277.0" layoutY="436.0" mnemonicParsing="false" onAction="#rulesKlikken" prefHeight="25.0" prefWidth="143.0" text="Rules" />
+      <Separator layoutX="19.0" layoutY="418.0" prefHeight="4.0" prefWidth="659.0" />
+      <Label layoutX="200.0" layoutY="80.0" text="Welcome to Ultimate TicTacBiem!">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="beginLabel" alignment="CENTER" contentDisplay="TOP" layoutX="58.0" layoutY="127.0" prefHeight="275.0" prefWidth="595.0" text="test" wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="14.0" opacity="0.2" stroke="BLACK" strokeLineJoin="ROUND" strokeType="OUTSIDE" width="200.0" />
+</children>
+</Pane>
